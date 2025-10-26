@@ -1,0 +1,105 @@
+body {
+    font-family: 'Georgia', serif; /* Fonte mais clássica e romântica */
+    background-color: #ffebee; /* Rosa bem clarinho, cor de romance */
+    color: #4a4a4a;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #ff80ab; /* Rosa mais vibrante */
+    color: white;
+    text-align: center;
+    padding: 2em 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.8em;
+    letter-spacing: 2px;
+}
+
+main {
+    max-width: 800px;
+    margin: 2em auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+section {
+    margin-bottom: 2em;
+    padding: 1.5em;
+    border-bottom: 1px solid #fce4ec; /* Linha divisória sutil */
+}
+
+section:last-of-type {
+    border-bottom: none;
+}
+
+h2 {
+    color: #e91e63; /* Um rosa mais forte para os títulos */
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+p {
+    text-align: justify;
+    margin-bottom: 1em;
+}
+
+.assinatura {
+    text-align: right;
+    font-style: italic;
+    font-weight: bold;
+    color: #d81b60;
+    margin-top: 2em;
+}
+
+.galeria {
+    text-align: center;
+    margin-top: 1.5em;
+}
+
+.galeria img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+}
+
+.galeria img:hover {
+    transform: scale(1.02);
+}
+
+.legenda-foto {
+    font-style: italic;
+    color: #e91e63;
+    margin-top: 0.8em;
+    font-size: 1.1em;
+    text-align: center; /* Centraliza a legenda */
+}
+
+.musica-favorita {
+    text-align: center;
+}
+
+.musica-favorita iframe {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 1.5em 0;
+    background-color: #ff80ab;
+    color: white;
+    font-size: 0.9em;
+    margin-top: 2em;
+}
