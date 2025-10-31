@@ -113,7 +113,7 @@
         }
 
 
-        /* --- NOVO ESTILO: TELA INICIAL --- */
+        /* --- TELA INICIAL --- */
         #mainIntroScreen h1 {
             margin-bottom: 10px;
         }
@@ -149,13 +149,12 @@
         /* --- FIM TELA INICIAL --- */
 
 
-        /* --- NOVO ESTILO: ENVELOPE ESTILIZADO (Inspirado na Image 2) --- */
+        /* --- ENVELOPE ESTILIZADO (Revisado) --- */
         .envelope-container {
-            /* Mantém a mesma estrutura de envelope do CSS anterior */
             position: relative;
             width: 400px;
             height: 250px;
-            background-color: rgba(26, 26, 26, 0.85); /* Fundo escuro */
+            background-color: rgba(26, 26, 26, 0.9); /* Fundo mais escuro para destaque */
             border: 2px solid var(--cor-principal);
             border-radius: 15px;
             display: flex;
@@ -163,16 +162,16 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            overflow: hidden; /* Importante para o novo design */
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.8s ease; /* Adicionado opacity para a animação */
+            overflow: hidden;
         }
         .envelope-container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
         }
 
-        /* Linhas do Envelope (Inspirado na Image 2 - Recriação do design) */
+        /* Linhas do Envelope */
         .envelope-container .envelope-lines {
             position: absolute;
             top: 0;
@@ -180,39 +179,33 @@
             width: 100%;
             height: 100%;
             z-index: 3;
-            /* Recriando as linhas cruzadas em rosa claro */
-            background: linear-gradient(135deg, transparent 49.5%, rgba(255, 105, 180, 0.5) 50%, transparent 50.5%),
-                        linear-gradient(-135deg, transparent 49.5%, rgba(255, 105, 180, 0.5) 50%, transparent 50.5%);
+            background: linear-gradient(135deg, transparent 49.5%, rgba(255, 105, 180, 0.3) 50%, transparent 50.5%),
+                        linear-gradient(-135deg, transparent 49.5%, rgba(255, 105, 180, 0.3) 50%, transparent 50.5%);
         }
         
-        .envelope-container.open .envelope-lines {
-            /* Animação de abrir não se aplica a este novo visual, mas pode-se esconder */
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-
+        /* Coração Central no Envelope */
         .envelope-container .envelope-dot {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
+            width: 50px; /* Um pouco maior */
+            height: 50px;
             background-color: var(--cor-principal);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.5em;
+            font-size: 2em; /* Ícone maior */
             cursor: pointer;
             z-index: 5;
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .envelope-container:hover .envelope-dot {
-            transform: translate(-50%, -50%) scale(1.1);
-            box-shadow: 0 0 25px rgba(255, 105, 180, 0.9);
+            transform: translate(-50%, -50%) scale(1.15); /* Mais destaque ao passar o mouse */
+            box-shadow: 0 0 30px rgba(255, 105, 180, 1);
         }
 
         .envelope-details {
@@ -226,41 +219,55 @@
             flex-direction: column;
             align-items: center;
             height: 100%;
-            justify-content: center;
+            justify-content: space-between; /* Ajustado para espaçar os elementos */
             text-align: center;
         }
 
-        .envelope-details .to-from {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end; /* Alinha o "De:" com o "Para:" */
-            width: 80%; /* Controla a distância entre eles */
-            margin-top: 100px;
-        }
-        .envelope-details .to-from span {
-            font-size: 1em;
-            color: var(--cor-secundaria);
+        .envelope-details .to-text { /* Novo elemento para "Para:" */
+            font-size: 1.1em;
             font-family: 'Montserrat', sans-serif;
             font-weight: 300;
-            line-height: 1.2;
+            color: var(--cor-secundaria);
+            margin-top: 50px; /* Distância do topo */
         }
-        .envelope-details .to-from .name {
+        .envelope-details .name {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.2em;
+            font-size: 2.8em; /* Aumentado para destaque */
             color: var(--cor-principal);
+            line-height: 1; /* Ajusta o espaçamento da linha */
         }
-        .envelope-details .arrow-up {
-            font-size: 1.2em;
-            margin-top: 20px;
-            animation: bounce 1.5s infinite;
+        .envelope-details .from-text { /* Novo elemento para o "De:" lá embaixo */
+            font-size: 1.1em;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            color: var(--cor-secundaria);
+            margin-bottom: 30px; /* Distância da base */
         }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-5px);}
-            60% {transform: translateY(-2px);}
+        .envelope-details .sender-name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2em;
+            color: var(--cor-principal);
+            line-height: 1;
         }
-        /* --- FIM ENVELOPE ESTILIZADO --- */
 
+        /* Animação do Coração ao Abrir */
+        .opening-heart {
+            position: fixed; /* Fixado na tela */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0); /* Começa pequeno */
+            font-size: 8em; /* Coração grande */
+            color: var(--cor-principal);
+            opacity: 0;
+            z-index: 1001; /* Acima de tudo */
+            animation: heartPop 1s ease-out forwards;
+        }
+
+        @keyframes heartPop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } /* Desaparece */
+        }
 
         /* MODAIS, BOTÕES PRÓXIMO, GALERIA: MANTER IGUAL AO CÓDIGO ANTERIOR */
         /* Para economizar espaço, o restante do CSS (modals, botões, etc.) é o mesmo da versão anterior, garantindo a consistência visual. */
@@ -425,7 +432,7 @@
             transform: translateY(-2px);
         }
         .navigation-dots {
-            display: none; /* Oculta os pontos de navegação nesta versão para forçar o fluxo de "Próximo" */
+            display: none; 
         }
         
         /* Responsividade */
@@ -437,12 +444,17 @@
                 width: 90%;
                 height: 200px;
             }
-            .envelope-details .to-from {
-                width: 90%;
-                margin-top: 80px;
+            .envelope-details .to-text {
+                margin-top: 30px;
             }
-            .envelope-details .to-from .name {
-                font-size: 1.8em;
+            .envelope-details .name {
+                font-size: 2.2em;
+            }
+            .envelope-details .from-text {
+                margin-bottom: 20px;
+            }
+            .envelope-details .sender-name {
+                font-size: 1.5em;
             }
             .modal-content h3 {
                 font-size: 2em;
@@ -477,14 +489,16 @@
                 <div class="envelope-lines"></div> 
                 <div class="envelope-dot" id="openEnvelopeBtn"><i class="fas fa-heart"></i></div>
                 <div class="envelope-details">
-                    <div class="to-from">
-                        <span>Para: <span class="name">Gabriela Lopes</span></span>
-                        <span>De: <span class="name">Jone Lucas</span></span>
-                    </div>
-                    <p class="arrow-up" style="margin-top: 50px;">Toque no coração para abrir a mensagem</p>
+                    <p class="to-text">Para:</p>
+                    <p class="name">Gabriela Lopes</p>
+                    <p class="from-text">De: <span class="sender-name">Jone Lucas</span></p>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="openingHeart" class="opening-heart" style="display: none;">
+        <i class="fas fa-heart"></i>
     </div>
 
     <div id="messageModal" class="modal-overlay">
@@ -609,6 +623,7 @@
         const envelopeScreen = document.getElementById('envelopeScreen');
         const envelope = document.getElementById('envelope');
         const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
+        const openingHeart = document.getElementById('openingHeart');
 
         const modals = document.querySelectorAll('.modal-overlay');
         const nextButtons = document.querySelectorAll('.modal-next-btn');
@@ -675,18 +690,17 @@
 
         // 2. Toque no coração do Envelope
         openEnvelopeBtn.addEventListener('click', () => {
-            // A animação do envelope do design da Image 2 é CSS-based, mas 
-            // vamos simular a abertura mostrando o primeiro modal
-            
-            // Simula a abertura por 1 segundo antes de abrir o modal
-            envelope.style.opacity = 0; 
-            envelope.style.transform = 'scale(0.9)';
-            
+            // Esconde o envelope e mostra o coração animado
+            envelope.style.opacity = 0;
+            envelope.style.pointerEvents = 'none'; // Desabilita clique
+            openingHeart.style.display = 'block';
+
             setTimeout(() => {
-                openModal('messageModal'); 
-                envelope.style.opacity = 1;
-                envelope.style.transform = 'scale(1)';
-            }, 800); 
+                openingHeart.style.display = 'none'; // Esconde o coração
+                openModal('messageModal'); // Abre o modal de mensagem
+                envelope.style.opacity = 1; // Reseta o envelope (opcional, ele está por baixo)
+                envelope.style.pointerEvents = 'auto'; // Reabilita clique (se necessário)
+            }, 1000); // 1 segundo (duração da animação do coração)
         });
 
         // 3. Botões "Próximo" entre os Modais
