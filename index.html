@@ -9,10 +9,11 @@
     <style>
         /* Variáveis de Cores */
         :root {
-            --cor-principal: #FF69B4; /* Rosa, como na ref */
+            --cor-principal: #FF69B4; /* Rosa */
             --cor-secundaria: #f0f0f0; /* Branco suave */
             --cor-bg-escuro: #1a1a1a; /* Fundo escuro dos modais */
-            --cor-bg-overlay: rgba(0, 0, 0, 0.6); /* Overlay do fundo principal */
+            --cor-bg-overlay: rgba(0, 0, 0, 0.4); /* Overlay do fundo principal */
+            --cor-bg-overlay-forte: rgba(0, 0, 0, 0.7); /* Overlay mais forte */
             --cor-borda-modal: #333;
         }
 
@@ -23,7 +24,7 @@
             padding: 0;
             background-color: #000;
             color: var(--cor-secundaria);
-            overflow: hidden; /* Controlado pelo JS */
+            overflow: hidden; 
             display: flex;
             justify-content: center;
             align-items: center;
@@ -47,6 +48,7 @@
             opacity: 0;
             visibility: hidden;
             transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+            z-index: 10; /* Z-index para as telas */
         }
 
         .screen.active {
@@ -74,12 +76,14 @@
 
         /* Títulos e textos inspirados na imagem */
         .screen h1 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 5em;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em; /* Ajustado para caber no celular */
             color: var(--cor-principal);
             margin: 0;
             line-height: 1.2;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+            font-weight: 700;
+            padding: 0 10px;
         }
         .screen h2 {
             font-family: 'Great Vibes', cursive;
@@ -94,20 +98,64 @@
             margin-bottom: 15px;
         }
 
-        /* Corações */
-        .hearts {
-            font-size: 1.8em;
+        /* NOME E ASSINATURA */
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
             color: var(--cor-principal);
-            margin: 15px 0;
-            letter-spacing: 5px;
+            margin-top: 10px;
+            line-height: 1.2;
+        }
+        .text-small {
+            font-size: 1em;
+            font-weight: 300;
+            margin-top: 20px;
         }
 
-        /* Estilo da Carta (Envelope) */
+
+        /* --- NOVO ESTILO: TELA INICIAL --- */
+        #mainIntroScreen h1 {
+            margin-bottom: 10px;
+        }
+        .gift-icon {
+            font-size: 3em;
+            color: white;
+            background-color: var(--cor-principal);
+            border-radius: 50%;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
+        }
+        .open-gift-btn {
+            background-color: var(--cor-principal);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-top: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .open-gift-btn:hover {
+            background-color: #ff85c1;
+            transform: translateY(-2px);
+        }
+        /* --- FIM TELA INICIAL --- */
+
+
+        /* --- NOVO ESTILO: ENVELOPE ESTILIZADO (Inspirado na Image 2) --- */
         .envelope-container {
+            /* Mantém a mesma estrutura de envelope do CSS anterior */
             position: relative;
             width: 400px;
             height: 250px;
-            background-color: var(--cor-bg-escuro);
+            background-color: rgba(26, 26, 26, 0.85); /* Fundo escuro */
             border: 2px solid var(--cor-principal);
             border-radius: 15px;
             display: flex;
@@ -115,104 +163,35 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4); /* Brilho rosa */
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; /* Importante para o novo design */
         }
         .envelope-container:hover {
             transform: translateY(-5px);
             box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
         }
-        .envelope-container .top-flap {
+
+        /* Linhas do Envelope (Inspirado na Image 2 - Recriação do design) */
+        .envelope-container .envelope-lines {
             position: absolute;
             top: 0;
             left: 0;
-            width: 0;
-            height: 0;
-            border-left: 200px solid transparent;
-            border-right: 200px solid transparent;
-            border-bottom: 125px solid #2a2a2a; /* Cor do triângulo superior */
-            border-radius: 15px 15px 0 0;
-            transition: transform 0.5s ease-in-out;
-            transform-origin: top;
+            width: 100%;
+            height: 100%;
             z-index: 3;
+            /* Recriando as linhas cruzadas em rosa claro */
+            background: linear-gradient(135deg, transparent 49.5%, rgba(255, 105, 180, 0.5) 50%, transparent 50.5%),
+                        linear-gradient(-135deg, transparent 49.5%, rgba(255, 105, 180, 0.5) 50%, transparent 50.5%);
         }
-        .envelope-container.open .top-flap {
-            transform: rotateX(180deg);
-        }
-        .envelope-container .bottom-flap {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 200px solid transparent;
-            border-right: 200px solid transparent;
-            border-top: 125px solid #2a2a2a;
-            border-radius: 0 0 15px 15px;
-            z-index: 3;
-        }
-        .envelope-container .left-flap {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 0;
-            border-top: 125px solid transparent;
-            border-bottom: 125px solid transparent;
-            border-right: 200px solid #2a2a2a;
-            border-radius: 15px 0 0 15px;
-            z-index: 3;
-        }
-        .envelope-container .right-flap {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 0;
-            height: 0;
-            border-top: 125px solid transparent;
-            border-bottom: 125px solid transparent;
-            border-left: 200px solid #2a2a2a;
-            border-radius: 0 15px 15px 0;
-            z-index: 3;
+        
+        .envelope-container.open .envelope-lines {
+            /* Animação de abrir não se aplica a este novo visual, mas pode-se esconder */
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
-        .envelope-details {
-            position: relative;
-            z-index: 4; /* Acima das abas */
-            color: var(--cor-secundaria);
-            font-size: 1.1em;
-            padding: 20px;
-            width: 100%;
-        }
-        .envelope-details .to-from {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        .envelope-details .to-from span {
-            font-size: 1.2em;
-            color: var(--cor-principal);
-            font-family: 'Great Vibes', cursive;
-        }
-        .envelope-details p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.9em;
-            margin-top: 30px;
-        }
-        .envelope-details .arrow-down {
-            font-size: 1.5em;
-            margin-top: 10px;
-            animation: bounce 1.5s infinite;
-        }
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-10px);}
-            60% {transform: translateY(-5px);}
-        }
-
-        /* Ponto de clique no envelope */
-        .envelope-dot {
+        .envelope-container .envelope-dot {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -231,12 +210,61 @@
             box-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .envelope-dot:hover {
+        .envelope-container:hover .envelope-dot {
             transform: translate(-50%, -50%) scale(1.1);
             box-shadow: 0 0 25px rgba(255, 105, 180, 0.9);
         }
 
-        /* Modals (Pop-ups) */
+        .envelope-details {
+            position: relative;
+            z-index: 4; 
+            color: var(--cor-secundaria);
+            font-size: 1.1em;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .envelope-details .to-from {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end; /* Alinha o "De:" com o "Para:" */
+            width: 80%; /* Controla a distância entre eles */
+            margin-top: 100px;
+        }
+        .envelope-details .to-from span {
+            font-size: 1em;
+            color: var(--cor-secundaria);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.2;
+        }
+        .envelope-details .to-from .name {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2em;
+            color: var(--cor-principal);
+        }
+        .envelope-details .arrow-up {
+            font-size: 1.2em;
+            margin-top: 20px;
+            animation: bounce 1.5s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-5px);}
+            60% {transform: translateY(-2px);}
+        }
+        /* --- FIM ENVELOPE ESTILIZADO --- */
+
+
+        /* MODAIS, BOTÕES PRÓXIMO, GALERIA: MANTER IGUAL AO CÓDIGO ANTERIOR */
+        /* Para economizar espaço, o restante do CSS (modals, botões, etc.) é o mesmo da versão anterior, garantindo a consistência visual. */
+        
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -263,8 +291,8 @@
             padding: 30px;
             max-width: 700px;
             width: 90%;
-            max-height: 90vh; /* Limita a altura do modal */
-            overflow-y: auto; /* Adiciona rolagem se o conteúdo for muito grande */
+            max-height: 90vh; 
+            overflow-y: auto; 
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
             transform: translateY(20px);
             opacity: 0;
@@ -290,7 +318,7 @@
             color: var(--cor-principal);
         }
         .modal-content h3 {
-            font-family: 'Great Vibes', cursive; /* Mantém a fonte caligráfica para títulos internos */
+            font-family: 'Great Vibes', cursive;
             color: var(--cor-principal);
             font-size: 2.5em;
             margin-top: 0;
@@ -300,85 +328,12 @@
             justify-content: center;
             gap: 10px;
         }
-        .modal-content h3 i {
-            font-size: 0.8em;
-        }
         .modal-content p {
             font-size: 1.1em;
             line-height: 1.7;
             text-align: justify;
             margin-bottom: 20px;
         }
-
-        /* Estilo da Galeria Modal */
-        .modal-gallery-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #2b2b2b;
-            padding: 10px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            color: var(--cor-secundaria);
-        }
-        .modal-gallery-header h3 {
-            margin: 0;
-            font-size: 1.8em; /* Ajuste para o header */
-            color: var(--cor-secundaria);
-            font-family: 'Montserrat', sans-serif; /* Fonte normal para o header da galeria */
-        }
-        .modal-gallery-header h3 i {
-             color: var(--cor-principal);
-        }
-        .modal-gallery-header span {
-            background-color: var(--cor-principal);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-        .modal-gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            max-height: 40vh; /* Limita a altura da galeria */
-            overflow-y: auto; /* Adiciona rolagem se muitas fotos */
-            padding-right: 5px; /* Espaço para a barra de rolagem */
-        }
-        .modal-gallery-grid img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .modal-gallery-grid img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
-        }
-        .view-all-photos-btn {
-            background-color: #555; /* Cor diferente para "Ver Mais" */
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-size: 1em;
-            margin-top: 25px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-right: 10px; /* Espaço entre botões */
-        }
-        .view-all-photos-btn:hover {
-            background-color: #777;
-            transform: translateY(-2px);
-        }
-
-        /* --- NOVO ESTILO --- Botão "Próximo" */
         .modal-next-btn {
             background-color: var(--cor-principal);
             color: white;
@@ -403,54 +358,91 @@
             text-align: center;
             margin-top: 30px;
         }
-        /* --- FIM NOVO ESTILO --- */
-
-
-        /* Ocultar barra de rolagem (opcional) */
-        .modal-content::-webkit-scrollbar,
-        .modal-gallery-grid::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-content::-webkit-scrollbar-thumb,
-        .modal-gallery-grid::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 105, 180, 0.5); /* Rosa semitransparente */
+        .modal-gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2b2b2b;
+            padding: 10px 20px;
             border-radius: 10px;
+            margin-bottom: 20px;
+            color: var(--cor-secundaria);
         }
-        .modal-content::-webkit-scrollbar-track,
-        .modal-gallery-grid::-webkit-scrollbar-track {
-            background-color: #333;
-            border-radius: 10px;
+        .modal-gallery-header h3 {
+            margin: 0;
+            font-size: 1.8em; 
+            color: var(--cor-secundaria);
+            font-family: 'Montserrat', sans-serif; 
         }
-
+        .modal-gallery-header h3 i {
+             color: var(--cor-principal);
+        }
+        .modal-gallery-header span {
+            background-color: var(--cor-principal);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .modal-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            max-height: 40vh; 
+            overflow-y: auto; 
+            padding-right: 5px; 
+        }
+        .modal-gallery-grid img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .modal-gallery-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        .view-all-photos-btn {
+            background-color: #555; 
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 10px; 
+        }
+        .view-all-photos-btn:hover {
+            background-color: #777;
+            transform: translateY(-2px);
+        }
+        .navigation-dots {
+            display: none; /* Oculta os pontos de navegação nesta versão para forçar o fluxo de "Próximo" */
+        }
+        
         /* Responsividade */
         @media (max-width: 768px) {
             .screen h1 {
-                font-size: 3.5em;
-            }
-            .screen h2 {
-                font-size: 2.5em;
-            }
-            .screen p {
-                font-size: 1em;
+                font-size: 3em;
             }
             .envelope-container {
                 width: 90%;
                 height: 200px;
             }
-            .envelope-container .top-flap, .envelope-container .bottom-flap {
-                border-left-width: 45vw; /* Ajusta para 90% da largura */
-                border-right-width: 45vw;
-                border-bottom-width: 100px;
-                border-top-width: 100px;
+            .envelope-details .to-from {
+                width: 90%;
+                margin-top: 80px;
             }
-            .envelope-container .left-flap, .envelope-container .right-flap {
-                border-top-width: 100px;
-                border-bottom-width: 100px;
-                border-right-width: 45vw;
-                border-left-width: 45vw;
-            }
-            .modal-content {
-                padding: 20px;
+            .envelope-details .to-from .name {
+                font-size: 1.8em;
             }
             .modal-content h3 {
                 font-size: 2em;
@@ -466,33 +458,30 @@
 </head>
 <body>
 
-    <div id="loadingScreen" class="screen active" style="background-image: url('fundo_intro.jpg');">
+    <div id="mainIntroScreen" class="screen active" style="background-image: url('fundo_tela_inicial.jpg');">
         <div class="screen-content">
-            <h1>Coletando suas melhores memórias...</h1>
-            <div class="hearts">💖</div>
-            <p>Cada foto conta uma história especial</p>
-            <div class="gallery-grid" style="max-height: none; overflow: visible; margin-top: 50px; display: flex; justify-content: center; align-items: flex-end;">
-                <img src="foto_intro_1.jpg" alt="Memória 1" style="width: 180px; height: 180px; object-fit: cover; border-radius: 8px; transform: rotate(-8deg); margin: -30px 10px;">
-                <img src="foto_intro_2.jpg" alt="Memória 2" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; transform: rotate(5deg);">
-                <img src="foto_intro_3.jpg" alt="Memória 3" style="width: 190px; height: 190px; object-fit: cover; border-radius: 8px; transform: rotate(-3deg); margin: 20px -10px;">
-            </div>
+            <div class="gift-icon"><i class="fas fa-gift"></i></div>
+            <h1>Sua homenagem está pronta!</h1>
+            <p class="text-small">Para</p>
+            <p class="signature">Gabriela Lopes</p>
+            <p class="text-small">Com muito carinho, <span class="signature" style="font-size: 1.8em; margin: 0;">Jone Lucas</span></p>
+            <button class="open-gift-btn" id="goToEnvelopeBtn">
+                <i class="fas fa-arrow-right"></i> Abrir Presente
+            </button>
         </div>
     </div>
 
     <div id="envelopeScreen" class="screen" style="background-image: url('fundo_envelope.jpg');">
         <div class="screen-content">
             <div class="envelope-container" id="envelope">
-                <div class="top-flap"></div>
-                <div class="bottom-flap"></div>
-                <div class="left-flap"></div>
-                <div class="right-flap"></div>
+                <div class="envelope-lines"></div> 
                 <div class="envelope-dot" id="openEnvelopeBtn"><i class="fas fa-heart"></i></div>
                 <div class="envelope-details">
                     <div class="to-from">
-                        <span>Para: <span style="font-family: 'Great Vibes', cursive;">Gabriela Lopes</span></span>
-                        <span>De: <span style="font-family: 'Great Vibes', cursive;">Jone Lucas</span></span>
+                        <span>Para: <span class="name">Gabriela Lopes</span></span>
+                        <span>De: <span class="name">Jone Lucas</span></span>
                     </div>
-                    <p class="arrow-down">Toque para abrir</p>
+                    <p class="arrow-up" style="margin-top: 50px;">Toque no coração para abrir a mensagem</p>
                 </div>
             </div>
         </div>
@@ -517,7 +506,7 @@
             </p>
             
             <div class="modal-footer">
-                <button class="modal-next-btn" id="nextToGallery">
+                <button class="modal-next-btn" data-next-modal="galleryModal">
                     <i class="fas fa-arrow-right"></i> Próximo (Nossas Fotos)
                 </button>
             </div>
@@ -538,7 +527,7 @@
                 <button class="view-all-photos-btn" id="loadMorePhotosBtn" style="display: none;">
                     <i class="fas fa-images"></i> Ver Mais Fotos
                 </button>
-                <button class="modal-next-btn" id="nextToLove">
+                <button class="modal-next-btn" data-next-modal="loveModal">
                     <i class="fas fa-arrow-right"></i> Próximo (O que amo)
                 </button>
             </div>
@@ -560,7 +549,7 @@
             </p>
             
             <div class="modal-footer">
-                <button class="modal-next-btn" id="nextToHistory">
+                <button class="modal-next-btn" data-next-modal="historyModal">
                     <i class="fas fa-arrow-right"></i> Próximo (Nossa História)
                 </button>
             </div>
@@ -591,7 +580,7 @@
             </p>
 
             <div class="modal-footer">
-                <button class="modal-next-btn" id="nextToDreams">
+                <button class="modal-next-btn" data-next-modal="dreamsModal">
                     <i class="fas fa-arrow-right"></i> Próximo (Nossos Sonhos)
                 </button>
             </div>
@@ -613,47 +602,24 @@
         </div>
     </div>
 
-    <div class="navigation-dots" style="bottom: 20px; z-index: 1000;">
-        <div class="dot active" data-modal="messageModal" title="Mensagem"></div>
-        <div class="dot" data-modal="galleryModal" title="Fotos"></div>
-        <div class="dot" data-modal="loveModal" title="O que amo em você"></div>
-        <div class="dot" data-modal="historyModal" title="Nossa História"></div>
-        <div class="dot" data-modal="dreamsModal" title="Nossos Sonhos"></div>
-    </div>
-
-
     <script>
         // --- Pegando os Elementos ---
-        const loadingScreen = document.getElementById('loadingScreen');
+        const mainIntroScreen = document.getElementById('mainIntroScreen');
+        const goToEnvelopeBtn = document.getElementById('goToEnvelopeBtn');
         const envelopeScreen = document.getElementById('envelopeScreen');
         const envelope = document.getElementById('envelope');
         const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
 
-        const messageModal = document.getElementById('messageModal');
-        const closeMessageModal = document.getElementById('closeMessageModal');
-        const nextToGallery = document.getElementById('nextToGallery');
+        const modals = document.querySelectorAll('.modal-overlay');
+        const nextButtons = document.querySelectorAll('.modal-next-btn');
+        const closeButtons = document.querySelectorAll('.modal-close');
 
-        const galleryModal = document.getElementById('galleryModal');
-        const closeGalleryModal = document.getElementById('closeGalleryModal');
         const fullGalleryGrid = document.getElementById('fullGalleryGrid');
         const galleryPhotoCount = document.getElementById('galleryPhotoCount');
         const loadMorePhotosBtn = document.getElementById('loadMorePhotosBtn');
-        const nextToLove = document.getElementById('nextToLove');
 
-        const loveModal = document.getElementById('loveModal');
-        const closeLoveModal = document.getElementById('closeLoveModal');
-        const nextToHistory = document.getElementById('nextToHistory');
 
-        const historyModal = document.getElementById('historyModal');
-        const closeHistoryModal = document.getElementById('closeHistoryModal');
-        const nextToDreams = document.getElementById('nextToDreams');
-
-        const dreamsModal = document.getElementById('dreamsModal');
-        const closeDreamsModal = document.getElementById('closeDreamsModal');
-
-        const dots = document.querySelectorAll('.navigation-dots .dot');
-
-        // SUAS FOTOS AQUI (coloque os nomes dos arquivos na mesma pasta do HTML)
+        // SUAS FOTOS AQUI (Com a nova foto 'foto_galeria_10.jpg' adicionada)
         const allPhotos = [
             'foto_galeria_1.jpg',
             'foto_galeria_2.jpg',
@@ -664,9 +630,9 @@
             'foto_galeria_7.jpg',
             'foto_galeria_8.jpg',
             'foto_galeria_9.jpg',
-            // Adicione mais fotos aqui se tiver!
+            'foto_galeria_10.jpg', // NOVA FOTO: close do casal na água
         ];
-        let photosToShowInitially = 4; // Quantidade de fotos para mostrar no header da galeria
+        let photosToShowInitially = 4;
 
         // --- FUNÇÕES DE CONTROLE DE TELA/MODAL ---
         function showScreen(screenId) {
@@ -678,97 +644,73 @@
         }
 
         function openModal(modalId) {
+            closeAllModals(); // Garante que apenas um modal esteja aberto
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Garante que o modal comece do topo ao abrir
             document.getElementById(modalId).querySelector('.modal-content').scrollTop = 0;
-        }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            // Verifica se algum outro modal ainda está ativo (improvável, mas boa prática)
-            if (!document.querySelector('.modal-overlay.active')) {
-                 // Mantém a tela do envelope visível no fundo
-                showScreen('envelopeScreen'); 
-            }
-        }
-
-        function updateDotActiveState(activeModalId) {
-            dots.forEach(dot => {
-                dot.classList.remove('active');
-                if (dot.dataset.modal === activeModalId) {
-                    dot.classList.add('active');
-                }
-            });
-        }
-
-        // --- CARREGAMENTO INICIAL ---
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                loadingScreen.classList.remove('active');
-                showScreen('envelopeScreen');
-            }, 3000); // 3 segundos
-        });
-
-        // --- EVENTOS DA CARTA (ENVELOPE) ---
-        openEnvelopeBtn.addEventListener('click', () => {
-            envelope.classList.add('open');
-            envelope.style.pointerEvents = 'none'; 
-
-            setTimeout(() => {
-                showScreen('envelopeScreen'); 
-                openModal('messageModal'); 
-                updateDotActiveState('messageModal');
-            }, 800); // Tempo para a animação da carta
-        });
-        
-        // --- FUNÇÃO DE TRANSIÇÃO (PRÓXIMO) ---
-        function goToModal(currentModalId, nextModalId) {
-            closeModal(currentModalId);
-            openModal(nextModalId);
-            updateDotActiveState(nextModalId);
-            
-            // Lógica especial para a galeria
-            if (nextModalId === 'galleryModal') {
+            if (modalId === 'galleryModal') {
                 loadGalleryPhotos(photosToShowInitially);
             }
         }
 
-        // --- EVENTOS DOS BOTÕES "PRÓXIMO" ---
-        nextToGallery.addEventListener('click', () => goToModal('messageModal', 'galleryModal'));
-        nextToLove.addEventListener('click', () => goToModal('galleryModal', 'loveModal'));
-        nextToHistory.addEventListener('click', () => goToModal('loveModal', 'historyModal'));
-        nextToDreams.addEventListener('click', () => goToModal('historyModal', 'dreamsModal'));
+        function closeAllModals() {
+            modals.forEach(modal => {
+                modal.classList.remove('active');
+            });
+        }
 
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            // Após fechar o modal, retorna à tela do Envelope
+            showScreen('envelopeScreen'); 
+        }
+        
+        // --- EVENTOS DE FLUXO ---
+        
+        // 1. Botão "Abrir Presente" da Tela Inicial
+        goToEnvelopeBtn.addEventListener('click', () => {
+            showScreen('envelopeScreen');
+        });
 
-        // --- EVENTOS DOS BOTÕES "FECHAR" (X) ---
-        closeMessageModal.addEventListener('click', () => closeModal('messageModal'));
-        closeGalleryModal.addEventListener('click', () => closeModal('galleryModal'));
-        closeLoveModal.addEventListener('click', () => closeModal('loveModal'));
-        closeHistoryModal.addEventListener('click', () => closeModal('historyModal'));
-        closeDreamsModal.addEventListener('click', () => closeModal('dreamsModal'));
+        // 2. Toque no coração do Envelope
+        openEnvelopeBtn.addEventListener('click', () => {
+            // A animação do envelope do design da Image 2 é CSS-based, mas 
+            // vamos simular a abertura mostrando o primeiro modal
+            
+            // Simula a abertura por 1 segundo antes de abrir o modal
+            envelope.style.opacity = 0; 
+            envelope.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                openModal('messageModal'); 
+                envelope.style.opacity = 1;
+                envelope.style.transform = 'scale(1)';
+            }, 800); 
+        });
 
-        // --- NAVEGAÇÃO POR PONTOS (Ainda funciona) ---
-        dots.forEach(dot => {
-            dot.addEventListener('click', () => {
-                const targetModalId = dot.dataset.modal;
-                // Fecha qualquer modal aberto
-                document.querySelectorAll('.modal-overlay').forEach(modal => {
-                    modal.classList.remove('active');
-                });
-                // Abre o modal clicado
-                openModal(targetModalId);
-                updateDotActiveState(targetModalId);
+        // 3. Botões "Próximo" entre os Modais
+        nextButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const currentModal = e.target.closest('.modal-overlay');
+                const nextModalId = button.dataset.nextModal;
+                
+                closeModal(currentModal.id);
+                openModal(nextModalId);
+            });
+        });
 
-                if (targetModalId === 'galleryModal') {
-                    loadGalleryPhotos(photosToShowInitially);
-                }
+        // 4. Botões "Fechar" (X)
+        closeButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const currentModal = e.target.closest('.modal-overlay');
+                closeModal(currentModal.id);
             });
         });
 
         // --- LÓGICA DA GALERIA ---
         function loadGalleryPhotos(count) {
-            fullGalleryGrid.innerHTML = ''; // Limpa as fotos existentes
+            fullGalleryGrid.innerHTML = '';
             const photosSubset = allPhotos.slice(0, count);
 
             photosSubset.forEach(photoSrc => {
@@ -778,7 +720,7 @@
                 fullGalleryGrid.appendChild(img);
             });
 
-            galleryPhotoCount.textContent = `${photosSubset.length} fotos`;
+            galleryPhotoCount.textContent = `${photosSubset.length} de ${allPhotos.length} fotos`;
 
             if (count < allPhotos.length) {
                 loadMorePhotosBtn.style.display = 'inline-flex';
@@ -788,12 +730,10 @@
         }
 
         loadMorePhotosBtn.addEventListener('click', () => {
-            photosToShowInitially = allPhotos.length; // Carrega todas as fotos
+            photosToShowInitially = allPhotos.length;
             loadGalleryPhotos(photosToShowInitially);
         });
 
-        // Definir o estado inicial dos pontos
-        updateDotActiveState('messageModal'); 
     </script>
 
 </body>
