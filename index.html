@@ -1,60 +1,179 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para o Meu Amor - Gabriela Lopes</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Para o Meu Amor Eterno, [Nome Dela]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos CSS (pode ser colocado em um arquivo style.css) */
+        :root {
+            --cor-principal: #FF69B4; /* Rosa Choque, pode ser alterado para #E9967A (Salmão) ou #8B0000 (Vermelho Escuro) */
+            --cor-fundo: #FFF8E1; /* Creme Suave */
+            --cor-texto: #444;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .hero {
+            background-image: url('sua_foto_principal.jpg'); /* Substitua por sua melhor foto! */
+            background-size: cover;
+            background-position: center;
+            height: 100vh; /* Ocupa a altura total da tela */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4em;
+            margin-bottom: 0.1em;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            border-bottom: 3px solid white;
+            padding-bottom: 10px;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-family: 'Playfair Display', serif;
+            color: var(--cor-principal);
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--cor-principal);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* Estilo da Contagem Progressiva */
+        #contador {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--cor-principal);
+            margin-top: 20px;
+        }
+
+        /* Estilo da Galeria/Linha do Tempo */
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .timeline-item {
+            width: 300px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        .timeline-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item h3 {
+            color: var(--cor-principal);
+            font-family: 'Playfair Display', serif;
+            margin-top: 0;
+        }
+    </style>
 </head>
 <body>
 
-    <header>
-        <h1>Para a Gabriela Lopes, meu amor! ❤️</h1>
+    <header class="hero">
+        <h1>[Nome Dela], Meu Amor</h1>
+        <p>A História Mais Linda Começou Em [Data do Início]</p>
+        <div id="contador"></div>
     </header>
 
-    <main>
-        <section class="mensagem-principal">
-            <h2>O Quanto Você Significa Pra Mim</h2>
-            <p>
-                Amor, às vezes eu fico aqui pensando no tamanho da sorte que eu tenho… Todo dia eu acordo feliz só por saber que você existe na minha vida. Você é meu amor, minha paz, meu sorriso fácil. A melhor sensação do mundo é imaginar a gente juntinhos, eu te abraçando forte, te enchendo de beijinhos e vivendo cada coisinha boa ao seu lado.
-            </p>
-            <p>
-                Eu sempre vou escolher você. Sempre. Cada segundo com você é especial, é único, é diferente de tudo que eu já vivi. Eu que agradeço, meu amor, por nunca soltar a minha mão, por estar comigo em todos os momentos. Você é tudo pra mim, tudo mesmo.
-            </p>
-            <p>
-                Eu sou completamente apaixonado por cada detalhe seu. Fico revendo seus vídeos e áudios, com aquele sorrisinho bobo, pensando: “caramba, que mulher maravilhosa eu tenho!”. Você mexe comigo de um jeito que ninguém nunca conseguiu. Até quando a gente briga, amor… eu sei que é só o mundo tentando testar a gente, porque nosso futuro vai ser gigante.
-            </p>
-            <p>
-                E falando em teste… eu morro de medo quando você tá bravinha kkkk mas amo o seu jeitinho, sou totalmente viciado em você. Eu nunca me arrependi de nada que fiz pela gente e nem vou. Aprender com você, cuidar de você, amar você… é um privilégio enorme.
-            </p>
-            <p>
-                Deus sabia o que tava fazendo quando cruzou nossos caminhos. Você é o amor da minha vida, minha baixinha, minha princesa, minha nenezinha. E pode ter certeza: a gente vai casar sim, e eu não vejo a hora de te chamar de minha pra sempre.
-            </p>
-            <p>
-                Eu te amo absurdamente, amor. Muito mais do que eu consigo explicar. 💖✨
-            </p>
-            <p class="assinatura">Com todo o meu amor, <br> Seu [Seu Nome]</p>
-        </section>
-
-        <section class="nossos-momentos">
-            <h2>Nossos Melhores Momentos</h2>
-            <div class="galeria">
-                <img src="nossafoto.jpg" alt="Casal na praia ao pôr do sol">
-                <p class="legenda-foto">Queria que essa foto fosse real ❤️</p>
-                </div>
-        </section>
+    <section class="section">
+        <h2>A Nossa História</h2>
+        <p>Cada momento ao seu lado é um presente que guardo no coração. Lembre-se de alguns dos nossos favoritos:</p>
         
-        <section class="musica-favorita">
-            <h2>Nossa Música - Perfect</h2>
-            
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/o3-lzz60iTQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            
-        </section>
-    </main>
+        <div class="timeline">
+            <div class="timeline-item">
+                <img src="foto_momento_1.jpg" alt="Nosso Primeiro Encontro">
+                <h3>Primeiro Encontro</h3>
+                <p><strong>[DD/MM/AAAA]</strong></p>
+                <p>Lembro-me de cada detalhe daquele dia. Meu coração sabia que algo especial estava começando. Foi perfeito!</p>
+            </div>
 
-    <footer>
-        <p>Feito com amor, pensando em você. &copy; 2025</p>
-    </footer>
+            <div class="timeline-item">
+                <img src="foto_momento_2.jpg" alt="Nossa Primeira Viagem">
+                <h3>Aventura em [Local]</h3>
+                <p><strong>[DD/MM/AAAA]</strong></p>
+                <p>Nossa primeira viagem juntos. Aprendi muito sobre o seu lado aventureiro e me apaixonei mais um pouco.</p>
+            </div>
+
+            <div class="timeline-item">
+                <img src="foto_momento_3.jpg" alt="Nosso Momento Favorito">
+                <h3>Nosso Cantinho Favorito</h3>
+                <p><strong>[DD/MM/AAAA]</strong></p>
+                <p>Esse dia no [Local] foi simples, mas a sua risada fez tudo valer a pena. Meu momento favorito com você.</p>
+            </div>
+            
+            </div>
+    </section>
+
+    <section class="section" style="background-color: white;">
+        <h2>Meu Amor Por Você</h2>
+        <p style="font-style: italic; font-size: 1.2em; color: var(--cor-principal);">
+            "De todas as histórias de amor do mundo, a nossa é a minha favorita. Você é a minha paz e a minha alegria."
+        </p>
+        <p>Obrigado por ser quem você é. <br>Com todo o meu amor, **[Seu Nome]**.</p>
+    </section>
+
+    <script>
+        // SCRIPT JAVASCRIPT para Contagem Progressiva (Há quanto tempo vocês estão juntos)
+
+        // *** IMPORTANTE: ALtere a data aqui para a data de início do seu relacionamento: Ano, Mês-1, Dia
+        const dataInicio = new Date(2023, 5, 10); // Exemplo: 10 de Junho de 2023 (Mês 5 = Junho, pois Janeiro é 0)
+        // **********************************************************************************************
+
+        function atualizarContador() {
+            const agora = new Date();
+            const diferenca = agora - dataInicio;
+
+            // Cálculos
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const meses = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 30.4375)); // Média de dias por mês
+            const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365.25));
+
+            document.getElementById('contador').innerHTML = 
+                `${anos} Anos | ${meses} Meses | ${dias} Dias Juntos ❤️`;
+        }
+
+        // Atualiza a cada segundo
+        atualizarContador(); 
+        setInterval(atualizarContador, 1000 * 60 * 60 * 24); // A cada 24 horas (para atualizar os dias)
+    </script>
 
 </body>
 </html>
