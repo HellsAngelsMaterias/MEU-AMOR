@@ -263,6 +263,8 @@
             padding: 30px;
             max-width: 700px;
             width: 90%;
+            max-height: 90vh; /* Limita a altura do modal */
+            overflow-y: auto; /* Adiciona rolagem se o conteúdo for muito grande */
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
             transform: translateY(20px);
             opacity: 0;
@@ -339,7 +341,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 10px;
-            max-height: 50vh; /* Limita a altura da galeria */
+            max-height: 40vh; /* Limita a altura da galeria */
             overflow-y: auto; /* Adiciona rolagem se muitas fotos */
             padding-right: 5px; /* Espaço para a barra de rolagem */
         }
@@ -357,6 +359,27 @@
             box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
         }
         .view-all-photos-btn {
+            background-color: #555; /* Cor diferente para "Ver Mais" */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 10px; /* Espaço entre botões */
+        }
+        .view-all-photos-btn:hover {
+            background-color: #777;
+            transform: translateY(-2px);
+        }
+
+        /* --- NOVO ESTILO --- Botão "Próximo" */
+        .modal-next-btn {
             background-color: var(--cor-principal);
             color: white;
             border: none;
@@ -369,31 +392,31 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
         }
-        .view-all-photos-btn:hover {
+        .modal-next-btn:hover {
             background-color: #ff85c1;
             transform: translateY(-2px);
         }
-
-        /* Estilo para a tela final de agradecimento */
-        .thank-you-message h2 {
-            font-size: 3em;
-        }
-        .thank-you-message p {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.5em;
-            color: var(--cor-principal);
+        .modal-footer {
+            text-align: center;
             margin-top: 30px;
         }
+        /* --- FIM NOVO ESTILO --- */
+
 
         /* Ocultar barra de rolagem (opcional) */
+        .modal-content::-webkit-scrollbar,
         .modal-gallery-grid::-webkit-scrollbar {
             width: 8px;
         }
+        .modal-content::-webkit-scrollbar-thumb,
         .modal-gallery-grid::-webkit-scrollbar-thumb {
             background-color: rgba(255, 105, 180, 0.5); /* Rosa semitransparente */
             border-radius: 10px;
         }
+        .modal-content::-webkit-scrollbar-track,
         .modal-gallery-grid::-webkit-scrollbar-track {
             background-color: #333;
             border-radius: 10px;
@@ -492,9 +515,12 @@
             <p>
                 Deus sabia o que tava fazendo quando cruzou nossos caminhos. Você é o amor da minha vida, minha baixinha, minha princesa, minha nenezinha. E pode ter certeza: a gente vai casar sim, e eu não vejo a hora de te chamar de minha pra sempre.
             </p>
-            <p style="font-size: 0.9em; margin-top: 30px; text-align: center;">
-                <i class="fas fa-ellipsis-h"></i> Clique no (X) para ver as outras seções
-            </p>
+            
+            <div class="modal-footer">
+                <button class="modal-next-btn" id="nextToGallery">
+                    <i class="fas fa-arrow-right"></i> Próximo (Nossas Fotos)
+                </button>
+            </div>
         </div>
     </div>
 
@@ -507,9 +533,15 @@
             </div>
             <div class="modal-gallery-grid" id="fullGalleryGrid">
                 </div>
-            <button class="view-all-photos-btn" id="loadMorePhotosBtn" style="display: none;">
-                <i class="fas fa-images"></i> Ver Mais Fotos
-            </button>
+            
+            <div class="modal-footer">
+                <button class="view-all-photos-btn" id="loadMorePhotosBtn" style="display: none;">
+                    <i class="fas fa-images"></i> Ver Mais Fotos
+                </button>
+                <button class="modal-next-btn" id="nextToLove">
+                    <i class="fas fa-arrow-right"></i> Próximo (O que amo)
+                </button>
+            </div>
         </div>
     </div>
 
@@ -526,6 +558,12 @@
             <p>
                 Você é o meu refúgio, meu amor, minha paz. E toda vez que eu te olho, tenho certeza de que encontrei a pessoa certa, aquela que eu quero pra sempre.
             </p>
+            
+            <div class="modal-footer">
+                <button class="modal-next-btn" id="nextToHistory">
+                    <i class="fas fa-arrow-right"></i> Próximo (Nossa História)
+                </button>
+            </div>
         </div>
     </div>
 
@@ -551,6 +589,12 @@
             <p>
                 Nosso começo pode ter sido inesperado, mas foi o destino mostrando que o que é pra ser, sempre encontra o caminho. E eu sei, com toda certeza, que o meu caminho é você.
             </p>
+
+            <div class="modal-footer">
+                <button class="modal-next-btn" id="nextToDreams">
+                    <i class="fas fa-arrow-right"></i> Próximo (Nossos Sonhos)
+                </button>
+            </div>
         </div>
     </div>
 
@@ -579,6 +623,7 @@
 
 
     <script>
+        // --- Pegando os Elementos ---
         const loadingScreen = document.getElementById('loadingScreen');
         const envelopeScreen = document.getElementById('envelopeScreen');
         const envelope = document.getElementById('envelope');
@@ -586,18 +631,22 @@
 
         const messageModal = document.getElementById('messageModal');
         const closeMessageModal = document.getElementById('closeMessageModal');
+        const nextToGallery = document.getElementById('nextToGallery');
 
         const galleryModal = document.getElementById('galleryModal');
         const closeGalleryModal = document.getElementById('closeGalleryModal');
         const fullGalleryGrid = document.getElementById('fullGalleryGrid');
         const galleryPhotoCount = document.getElementById('galleryPhotoCount');
         const loadMorePhotosBtn = document.getElementById('loadMorePhotosBtn');
+        const nextToLove = document.getElementById('nextToLove');
 
         const loveModal = document.getElementById('loveModal');
         const closeLoveModal = document.getElementById('closeLoveModal');
+        const nextToHistory = document.getElementById('nextToHistory');
 
         const historyModal = document.getElementById('historyModal');
         const closeHistoryModal = document.getElementById('closeHistoryModal');
+        const nextToDreams = document.getElementById('nextToDreams');
 
         const dreamsModal = document.getElementById('dreamsModal');
         const closeDreamsModal = document.getElementById('closeDreamsModal');
@@ -605,7 +654,6 @@
         const dots = document.querySelectorAll('.navigation-dots .dot');
 
         // SUAS FOTOS AQUI (coloque os nomes dos arquivos na mesma pasta do HTML)
-        // Certifique-se de que os arquivos de imagem existam!
         const allPhotos = [
             'foto_galeria_1.jpg',
             'foto_galeria_2.jpg',
@@ -626,19 +674,22 @@
                 screen.classList.remove('active');
             });
             document.getElementById(screenId).classList.add('active');
-            document.body.style.overflow = 'hidden'; // Impede rolagem no corpo principal
+            document.body.style.overflow = 'hidden'; 
         }
 
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden'; // Impede rolagem quando modal está aberto
+            document.body.style.overflow = 'hidden';
+            // Garante que o modal comece do topo ao abrir
+            document.getElementById(modalId).querySelector('.modal-content').scrollTop = 0;
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-            // Só habilita a rolagem se não houver outros modais abertos
+            // Verifica se algum outro modal ainda está ativo (improvável, mas boa prática)
             if (!document.querySelector('.modal-overlay.active')) {
-                document.body.style.overflow = 'auto';
+                 // Mantém a tela do envelope visível no fundo
+                showScreen('envelopeScreen'); 
             }
         }
 
@@ -653,7 +704,6 @@
 
         // --- CARREGAMENTO INICIAL ---
         window.addEventListener('load', () => {
-            // Após 3 segundos na tela de carregamento, mostra a tela do envelope
             setTimeout(() => {
                 loadingScreen.classList.remove('active');
                 showScreen('envelopeScreen');
@@ -663,31 +713,42 @@
         // --- EVENTOS DA CARTA (ENVELOPE) ---
         openEnvelopeBtn.addEventListener('click', () => {
             envelope.classList.add('open');
-            envelope.style.pointerEvents = 'none'; // Desabilita clique no envelope depois de abrir
+            envelope.style.pointerEvents = 'none'; 
 
-            // Animação para o overlay do envelope sumir ou revelar o próximo conteúdo
             setTimeout(() => {
-                showScreen('envelopeScreen'); // Garante que a tela de fundo ainda esteja visível
-                openModal('messageModal'); // Abre o modal de mensagem
+                showScreen('envelopeScreen'); 
+                openModal('messageModal'); 
                 updateDotActiveState('messageModal');
             }, 800); // Tempo para a animação da carta
         });
+        
+        // --- FUNÇÃO DE TRANSIÇÃO (PRÓXIMO) ---
+        function goToModal(currentModalId, nextModalId) {
+            closeModal(currentModalId);
+            openModal(nextModalId);
+            updateDotActiveState(nextModalId);
+            
+            // Lógica especial para a galeria
+            if (nextModalId === 'galleryModal') {
+                loadGalleryPhotos(photosToShowInitially);
+            }
+        }
 
-        // --- EVENTOS DOS MODAIS ---
-        closeMessageModal.addEventListener('click', () => {
-            closeModal('messageModal');
-            // Após fechar a mensagem, abre automaticamente a galeria
-            openModal('galleryModal');
-            updateDotActiveState('galleryModal');
-            loadGalleryPhotos(photosToShowInitially); // Carrega fotos iniciais na galeria
-        });
+        // --- EVENTOS DOS BOTÕES "PRÓXIMO" ---
+        nextToGallery.addEventListener('click', () => goToModal('messageModal', 'galleryModal'));
+        nextToLove.addEventListener('click', () => goToModal('galleryModal', 'loveModal'));
+        nextToHistory.addEventListener('click', () => goToModal('loveModal', 'historyModal'));
+        nextToDreams.addEventListener('click', () => goToModal('historyModal', 'dreamsModal'));
 
+
+        // --- EVENTOS DOS BOTÕES "FECHAR" (X) ---
+        closeMessageModal.addEventListener('click', () => closeModal('messageModal'));
         closeGalleryModal.addEventListener('click', () => closeModal('galleryModal'));
         closeLoveModal.addEventListener('click', () => closeModal('loveModal'));
         closeHistoryModal.addEventListener('click', () => closeModal('historyModal'));
         closeDreamsModal.addEventListener('click', () => closeModal('dreamsModal'));
 
-        // --- NAVEGAÇÃO POR PONTOS ---
+        // --- NAVEGAÇÃO POR PONTOS (Ainda funciona) ---
         dots.forEach(dot => {
             dot.addEventListener('click', () => {
                 const targetModalId = dot.dataset.modal;
@@ -699,7 +760,6 @@
                 openModal(targetModalId);
                 updateDotActiveState(targetModalId);
 
-                // Lógica específica para a galeria se for clicada
                 if (targetModalId === 'galleryModal') {
                     loadGalleryPhotos(photosToShowInitially);
                 }
@@ -720,7 +780,6 @@
 
             galleryPhotoCount.textContent = `${photosSubset.length} fotos`;
 
-            // Mostra o botão "Ver Mais Fotos" se houver mais fotos para carregar
             if (count < allPhotos.length) {
                 loadMorePhotosBtn.style.display = 'inline-flex';
             } else {
@@ -734,7 +793,7 @@
         });
 
         // Definir o estado inicial dos pontos
-        updateDotActiveState('messageModal'); // Mensagem é o primeiro a ser aberto após a carta
+        updateDotActiveState('messageModal'); 
     </script>
 
 </body>
