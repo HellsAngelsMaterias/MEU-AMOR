@@ -74,7 +74,31 @@
         }
 
         /* Tipografia */
-        .screen h1 {
+        /* Estilo para o Título da Intro - Alterado */
+        .custom-intro-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .custom-intro-title .gift-icon-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid var(--cor-principal);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+        }
+        .custom-intro-title .gift-icon-box i {
+            font-size: 2.5em;
+            color: var(--cor-principal);
+            text-shadow: 0 0 5px rgba(255, 105, 180, 0.7);
+        }
+        .custom-intro-title h1 {
             font-family: 'Montserrat', sans-serif;
             font-size: 3.5em;
             color: var(--cor-principal);
@@ -84,6 +108,8 @@
             font-weight: 700;
             padding: 0 10px;
         }
+        /* Fim da Alteração do Título */
+
         .signature {
             font-family: 'Great Vibes', cursive;
             font-size: 2.5em;
@@ -430,7 +456,7 @@
 
         /* Responsividade para celulares */
         @media (max-width: 768px) {
-            .screen h1 {
+            .custom-intro-title h1 {
                 font-size: 2.5em;
             }
             .envelope-container {
@@ -455,9 +481,6 @@
             .modal-content p {
                 font-size: 0.95em;
             }
-            .modal-gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-            }
             .viewer-nav-btn {
                 font-size: 1.5em;
                 padding: 10px 5px;
@@ -476,8 +499,13 @@
 
     <div id="mainIntroScreen" class="screen active" style="background-image: url('fundo_tela_inicial.jpg');">
         <div class="screen-content">
-            <div class="gift-icon"><i class="fas fa-gift"></i></div>
-            <h1>Sua homenagem está pronta!</h1>
+            
+            <div class="custom-intro-title">
+                <div class="gift-icon-box">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h1>Sua homenagem está pronta!</h1>
+            </div>
             <p class="text-small">Para</p>
             <p class="signature">Gabriela Lopes</p>
             <p class="text-small">Com muito carinho, <span class="signature" style="font-size: 1.8em; margin: 0;">Jone Lucas</span></p>
