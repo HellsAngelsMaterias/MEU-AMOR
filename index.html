@@ -1,512 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Um Presente Especial Para Você, Gabriela Lopes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Variáveis de Cores */
-        :root {
-            --cor-principal: #FF69B4; /* Rosa */
-            --cor-secundaria: #f0f0f0; /* Branco suave */
-            --cor-bg-escuro: #1a1a1a; /* Fundo escuro dos modais */
-            --cor-bg-overlay: rgba(0, 0, 0, 0.4); /* Overlay do fundo principal */
-            --cor-bg-overlay-forte: rgba(0, 0, 0, 0.7); /* Overlay mais forte */
-            --cor-borda-modal: #333;
-        }
+<style>
+/* ... (Mantenha todo o CSS anterior aqui) ... */
 
-        /* Estilos Gerais */
-        body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: var(--cor-secundaria);
-            overflow: hidden; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+/* --- NOVO ESTILO: Corações no Rastro do Mouse --- */
+.heart-trail {
+    position: fixed;
+    font-size: 1.5em; /* Tamanho do coração */
+    color: var(--cor-principal); /* Cor principal (Rosa) */
+    pointer-events: none; /* Garante que os corações não atrapalhem o clique */
+    transform: translate(-50%, -50%);
+    animation: fadeOut 1s forwards;
+    z-index: 5000; /* Deve aparecer acima de tudo, exceto o visualizador de fotos */
+    text-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
 
-        /* Estilo para cada "tela" (Intro e Envelope) */
-        .screen {
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
-            z-index: 10;
-        }
-
-        .screen.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .screen::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--cor-bg-overlay);
-            z-index: 1;
-        }
-
-        .screen-content {
-            position: relative;
-            z-index: 2;
-            padding: 20px;
-            max-width: 900px;
-        }
-
-        /* Tipografia */
-        .screen h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 3.5em;
-            color: var(--cor-principal);
-            margin: 0;
-            line-height: 1.2;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-            font-weight: 700;
-            padding: 0 10px;
-        }
-        .signature {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.5em;
-            color: var(--cor-principal);
-            margin-top: 10px;
-            line-height: 1.2;
-        }
-        .text-small {
-            font-size: 1em;
-            font-weight: 300;
-            margin-top: 20px;
-        }
-
-        /* Botão Principal */
-        .open-gift-btn {
-            background-color: var(--cor-principal);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 1.2em;
-            font-weight: 700;
-            margin-top: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .open-gift-btn:hover {
-            background-color: #ff85c1;
-            transform: translateY(-2px);
-        }
-
-        /* --- ESTILO DO ENVELOPE (Limpo) --- */
-        .envelope-container {
-            position: relative;
-            width: 400px;
-            height: 250px;
-            background-color: rgba(26, 26, 26, 0.9);
-            border: 2px solid var(--cor-principal);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.8s ease;
-            overflow: hidden;
-        }
-        .envelope-container .envelope-lines {
-            position: absolute;
-            /* ... (linhas do envelope, código omitido para concisão) ... */
-        }
-        .envelope-container .envelope-dot {
-            position: absolute;
-            /* ... (coração central, código omitido para concisão) ... */
-        }
-        .envelope-details {
-            position: relative;
-            z-index: 4; 
-            color: var(--cor-secundaria);
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            justify-content: space-between;
-            text-align: center;
-        }
-        .envelope-details .to-text { 
-            font-size: 1.1em;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            color: var(--cor-secundaria);
-            margin-top: 50px;
-        }
-        .envelope-details .name {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.8em;
-            color: var(--cor-principal);
-            line-height: 1;
-        }
-        .envelope-details .from-text { 
-            font-size: 1.1em;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            color: var(--cor-secundaria);
-            margin-bottom: 30px;
-        }
-        .envelope-details .sender-name {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2em;
-            color: var(--cor-principal);
-            line-height: 1;
-        }
-
-        /* Animação do Coração ao Abrir */
-        .opening-heart {
-            position: fixed; 
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            font-size: 8em; 
-            color: var(--cor-principal);
-            opacity: 0;
-            z-index: 1001; 
-            animation: heartPop 1s ease-out forwards;
-        }
-        @keyframes heartPop {
-            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
-        }
-
-        /* Estilos dos Modais Padrão (Mensagem, Amor, História, Sonhos) */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background-color: var(--cor-bg-escuro);
-            border: 2px solid var(--cor-borda-modal);
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 700px;
-            width: 90%;
-            max-height: 90vh; 
-            overflow-y: auto; 
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            transform: translateY(20px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            position: relative;
-        }
-        .modal-overlay.active .modal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        /* ... (estilos de botões, títulos, etc. dos modais padrão) ... */
-
-        /* --- ESTILO DA GALERIA (Miniaturas) --- */
-        .modal-gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            max-height: 40vh; 
-            overflow-y: auto; 
-            padding-right: 5px; 
-        }
-        .modal-gallery-grid img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .modal-gallery-grid img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
-        }
-
-        /* --- NOVO ESTILO: VISUALIZADOR DE FOTOS (SLIDESHOW) --- */
-        #photoViewerModal {
-            background-color: rgba(0, 0, 0, 0.95); /* Fundo preto total */
-            z-index: 2000; /* Mais alto que todos */
-        }
-
-        .photo-viewer-content {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .photo-viewer-image-container {
-            max-width: 95%;
-            max-height: 95vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-        }
-
-        #currentPhoto {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain; /* Garante que a foto caiba na tela sem cortar */
-            border-radius: 5px;
-            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
-            transition: opacity 0.3s ease-in-out; /* Transição suave na troca de foto */
-        }
-        
-        .viewer-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: none;
-            padding: 15px 10px;
-            cursor: pointer;
-            font-size: 2em;
-            border-radius: 5px;
-            transition: background 0.2s ease, color 0.2s ease;
-            z-index: 2005;
-        }
-        .viewer-nav-btn:hover {
-            background: rgba(255, 105, 180, 0.5);
-            color: var(--cor-principal);
-        }
-        #prevPhotoBtn {
-            left: 10px;
-        }
-        #nextPhotoBtn {
-            right: 10px;
-        }
-
-        #photoCounter {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 1.1em;
-            z-index: 2005;
-        }
-
-        /* Botão Fechar do Visualizador */
-        #closePhotoViewer {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2.5em;
-            color: white;
-            background: rgba(0, 0, 0, 0.5);
-            border: none;
-            padding: 5px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 2005;
-            transition: background 0.2s ease, color 0.2s ease;
-        }
-        #closePhotoViewer:hover {
-            background: var(--cor-principal);
-            color: black;
-        }
-
-        /* Responsividade para celulares */
-        @media (max-width: 768px) {
-            .screen h1 {
-                font-size: 2.5em;
-            }
-            .viewer-nav-btn {
-                font-size: 1.5em;
-                padding: 10px 5px;
-                background: rgba(255, 255, 255, 0.05); /* Mais sutil em telas menores */
-            }
-            #closePhotoViewer {
-                font-size: 1.8em;
-                top: 5px;
-                right: 5px;
-                padding: 5px 10px;
-            }
-        }
-    </style>
+@keyframes fadeOut {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) translateY(-20px); } /* Desaparece subindo */
+}
+</style>
 </head>
 <body>
-
-    <div id="mainIntroScreen" class="screen active" style="background-image: url('fundo_tela_inicial.jpg');">
-        <div class="screen-content">
-            <div class="gift-icon"><i class="fas fa-gift"></i></div>
-            <h1>Sua homenagem está pronta!</h1>
-            <p class="text-small">Para</p>
-            <p class="signature">Gabriela Lopes</p>
-            <p class="text-small">Com muito carinho, <span class="signature" style="font-size: 1.8em; margin: 0;">Jone Lucas</span></p>
-            <button class="open-gift-btn" id="goToEnvelopeBtn">
-                <i class="fas fa-arrow-right"></i> Abrir Presente
-            </button>
-        </div>
-    </div>
-
-    <div id="envelopeScreen" class="screen" style="background-image: url('fundo_envelope.jpg');">
-        <div class="screen-content">
-            <div class="envelope-container" id="envelope">
-                <div class="envelope-lines"></div> 
-                <div class="envelope-dot" id="openEnvelopeBtn"><i class="fas fa-heart"></i></div>
-                <div class="envelope-details">
-                    <p class="to-text">Para:</p>
-                    <p class="name">Gabriela Lopes</p>
-                    <p class="from-text">De: <span class="sender-name">Jone Lucas</span></p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="openingHeart" class="opening-heart" style="display: none;">
-        <i class="fas fa-heart"></i>
-    </div>
-
-    <div id="messageModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeMessageModal"><i class="fas fa-times"></i></button>
-            <h3><i class="fas fa-envelope-open-text"></i> Mensagem</h3>
-            <p>Amor, às vezes eu fico aqui pensando no tamanho da sorte que eu tenho… Todo dia eu acordo feliz só por saber que você existe na minha vida. Você é meu amor, minha paz, meu sorriso fácil...</p>
-            <p>Eu sou completamente apaixonado por cada detalhe seu. Fico revendo seus vídeos e áudios, com aquele sorrisinho bobo, pensando: “caramba, que mulher maravilhosa eu tenho!”...</p>
-            <p>E falando em teste… eu morro de medo quando você tá bravinha kkkk mas amo o seu jeitinho, sou totalmente viciado em você...</p>
-            <p>Deus sabia o que tava fazendo quando cruzou nossos caminhos. Você é o amor da minha vida, minha baixinha, minha princesa, minha nenezinha...</p>
-            
-            <div class="modal-footer">
-                <button class="modal-next-btn" data-next-modal="galleryModal">
-                    <i class="fas fa-arrow-right"></i> Próximo (Nossas Fotos)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="galleryModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeGalleryModal"><i class="fas fa-times"></i></button>
-            <div class="modal-gallery-header">
-                <h3><i class="fas fa-camera"></i> Nossas Fotos</h3>
-                <span id="galleryPhotoCount"></span>
-            </div>
-            <p style="text-align: center; font-style: italic; font-size: 1em;">Clique em uma foto para iniciar o modo Slideshow!</p>
-            <div class="modal-gallery-grid" id="fullGalleryGrid">
-                </div>
-            
-            <div class="modal-footer">
-                <button class="modal-next-btn" data-next-modal="loveModal">
-                    <i class="fas fa-arrow-right"></i> Próximo (O que amo)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="photoViewerModal" class="modal-overlay">
-        <div class="photo-viewer-content">
-            <button id="closePhotoViewer" aria-label="Fechar Slideshow"><i class="fas fa-times"></i></button>
-            
-            <button id="prevPhotoBtn" class="viewer-nav-btn" aria-label="Foto Anterior"><i class="fas fa-chevron-left"></i></button>
-            
-            <div class="photo-viewer-image-container">
-                <img id="currentPhoto" src="" alt="Foto do Casal">
-            </div>
-            
-            <button id="nextPhotoBtn" class="viewer-nav-btn" aria-label="Próxima Foto"><i class="fas fa-chevron-right"></i></button>
-            
-            <span id="photoCounter">1 de 10</span>
-        </div>
-    </div>
-    
-    <div id="loveModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeLoveModal"><i class="fas fa-times"></i></button>
-            <h3><i class="fas fa-heartbeat"></i> O Que Eu Mais Amo em Você</h3>
-            <p>Amor, eu amo o jeito que você me trata, o jeito que olha pra mim com aquele olhar que me desmonta por dentro...</p>
-            <p>Você é incrível, maravilhosa, gentil, linda e perfeita em todos os sentidos...</p>
-            <p>Você é o meu refúgio, meu amor, minha paz. E toda vez que eu te olho, tenho certeza de que encontrei a pessoa certa...</p>
-            <div class="modal-footer">
-                <button class="modal-next-btn" data-next-modal="historyModal">
-                    <i class="fas fa-arrow-right"></i> Próximo (Nossa História)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="historyModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeHistoryModal"><i class="fas fa-times"></i></button>
-            <h3><i class="fas fa-book-open"></i> A Nossa História</h3>
-            <p>Nossa história é algo que eu nunca vou esquecer. Tudo começou quando a Anajuh queria montar uma fac e me chamou pra participar...</p>
-            <p>Aí veio aquele dia em que você me chamou pra fazer uma ammu. Eu quase nunca aceitava, mas dessa vez aceitei, e foi aí que tudo começou a mudar...</p>
-            <p>Depois veio uma briga boba, coisa de criança, e eu acabei terminando. Foram uns 20 dias sem se falar, e parecia uma eternidade...</p>
-            <p>Nosso começo pode ter sido inesperado, mas foi o destino mostrando que o que é pra ser, sempre encontra o caminho. E eu sei, com toda certeza, que o meu caminho é você.</p>
-            <div class="modal-footer">
-                <button class="modal-next-btn" data-next-modal="dreamsModal">
-                    <i class="fas fa-arrow-right"></i> Próximo (Nossos Sonhos)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div id="dreamsModal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="modal-close" id="closeDreamsModal"><i class="fas fa-times"></i></button>
-            <h3><i class="fas fa-star"></i> Nossos Sonhos Juntos</h3>
-            <ul style="list-style: none; padding: 0; font-size: 1.1em; text-align: left; max-width: 400px; margin: 20px auto;">
-                <li>🏡 Nos conhecer pessoalmente, dar um abraço bem apertado e um beijo cheio de amor.</li>
-                <li>💖 Dizer tudo o que sentimos um pelo outro, olhando nos olhos.</li>
-                <li>👨‍👩‍👧‍👦 Construir uma família juntos e ter filhos.</li>
-                <li>💍 Nos casar e ficar juntos para sempre.</li>
-                <li>✈️ Viajar e viver muitas aventuras ao seu lado.</li>
-            </ul>
-            <p style="font-family: 'Great Vibes', cursive; font-size: 2em; color: var(--cor-principal); margin-top: 40px;">Para sempre com você,<br>Jone Lucas</p>
-        </div>
-    </div>
 
     <script>
         // --- Elementos Comuns ---
@@ -565,7 +78,7 @@
             if(modalContent) modalContent.scrollTop = 0;
 
             if (modalId === 'galleryModal') {
-                loadGalleryPhotos(); // Carrega todas as miniaturas
+                loadGalleryPhotos(); 
             }
         }
 
@@ -573,7 +86,7 @@
             modals.forEach(modal => {
                 modal.classList.remove('active');
             });
-            photoViewerModal.classList.remove('active'); // Garante que o visualizador feche
+            photoViewerModal.classList.remove('active');
         }
 
         function closeModal(modalId) {
@@ -581,7 +94,7 @@
             showScreen('envelopeScreen'); 
         }
         
-        // --- LÓGICA DO SLIDESHOW ---
+        // --- LÓGICA DO SLIDESHOW (Mantida) ---
 
         function loadGalleryPhotos() {
             fullGalleryGrid.innerHTML = '';
@@ -590,9 +103,8 @@
                 const img = document.createElement('img');
                 img.src = photoSrc;
                 img.alt = `Foto ${index + 1}`;
-                img.dataset.index = index; // Armazena o índice para abrir o slideshow
+                img.dataset.index = index;
                 
-                // Evento para abrir o Slideshow ao clicar na miniatura
                 img.addEventListener('click', () => {
                     openPhotoViewer(index);
                 });
@@ -606,22 +118,20 @@
         function openPhotoViewer(index) {
             currentPhotoIndex = index;
             updatePhotoViewer();
-            galleryModal.classList.remove('active'); // Esconde o modal de miniaturas
-            photoViewerModal.classList.add('active'); // Abre o visualizador
+            galleryModal.classList.remove('active'); 
+            photoViewerModal.classList.add('active');
         }
         
         function updatePhotoViewer() {
             const photoSrc = allPhotos[currentPhotoIndex];
             
-            // Transição suave
             currentPhotoImg.style.opacity = 0;
             setTimeout(() => {
                 currentPhotoImg.src = photoSrc;
                 photoCounterSpan.textContent = `${currentPhotoIndex + 1} de ${allPhotos.length}`;
                 currentPhotoImg.style.opacity = 1;
-            }, 300); // 300ms para a transição
+            }, 300);
             
-            // Habilitar/Desabilitar botões de navegação
             prevPhotoBtn.disabled = currentPhotoIndex === 0;
             nextPhotoBtn.disabled = currentPhotoIndex === allPhotos.length - 1;
         }
@@ -640,13 +150,11 @@
         prevPhotoBtn.addEventListener('click', () => navigatePhotos(-1));
         nextPhotoBtn.addEventListener('click', () => navigatePhotos(1));
         
-        // Fechar o visualizador de fotos e retornar ao modal de miniaturas
         closePhotoViewerBtn.addEventListener('click', () => {
             photoViewerModal.classList.remove('active');
             galleryModal.classList.add('active');
         });
         
-        // Adicionar navegação por teclado (opcional, mas profissional)
         document.addEventListener('keydown', (e) => {
             if (photoViewerModal.classList.contains('active')) {
                 if (e.key === 'ArrowLeft') {
@@ -661,14 +169,12 @@
         });
 
 
-        // --- EVENTOS DE FLUXO PRINCIPAL ---
+        // --- EVENTOS DE FLUXO PRINCIPAL (Mantidos) ---
         
-        // 1. Botão "Abrir Presente" da Tela Inicial
         goToEnvelopeBtn.addEventListener('click', () => {
             showScreen('envelopeScreen');
         });
 
-        // 2. Toque no coração do Envelope (Abre Mensagem)
         openEnvelopeBtn.addEventListener('click', () => {
             envelope.style.opacity = 0;
             envelope.style.pointerEvents = 'none';
@@ -682,7 +188,6 @@
             }, 1000); 
         });
 
-        // 3. Botões "Próximo" entre os Modais
         nextButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const currentModal = e.target.closest('.modal-overlay');
@@ -693,13 +198,54 @@
             });
         });
 
-        // 4. Botões "Fechar" (X) dos modais padrão
         closeButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const currentModal = e.target.closest('.modal-overlay');
                 closeModal(currentModal.id);
             });
         });
+
+
+        // --- NOVO CÓDIGO: RASTRO DE CORAÇÕES ---
+        document.addEventListener('mousemove', createHeartTrail);
+        document.addEventListener('touchstart', createHeartTrail);
+        document.addEventListener('touchmove', createHeartTrail);
+
+        let lastHeartTime = 0;
+
+        function createHeartTrail(e) {
+            const now = Date.now();
+            
+            // Limita a frequência para evitar sobrecarga (corações demais)
+            if (now - lastHeartTime < 50) { 
+                return;
+            }
+            lastHeartTime = now;
+
+            // Determina a posição X e Y (funciona para mouse e toque)
+            const x = e.clientX || (e.touches && e.touches[0].clientX);
+            const y = e.clientY || (e.touches && e.touches[0].clientY);
+
+            if (x === undefined || y === undefined) return;
+
+            const heart = document.createElement('i');
+            heart.classList.add('fas', 'fa-heart', 'heart-trail');
+            
+            // Define a posição
+            heart.style.left = `${x}px`;
+            heart.style.top = `${y}px`;
+            
+            // Adiciona um pequeno giro aleatório
+            const rotation = Math.random() * 40 - 20; // Entre -20 e 20 graus
+            heart.style.transform += ` rotate(${rotation}deg)`; 
+            
+            document.body.appendChild(heart);
+
+            // Remove o coração após a animação (1 segundo)
+            setTimeout(() => {
+                heart.remove();
+            }, 1000);
+        }
 
     </script>
 
