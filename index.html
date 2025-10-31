@@ -3,176 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para o Meu Amor Eterno, [Nome Dela]</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <title>Para o Meu Amor, [Nome Dela]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos CSS (pode ser colocado em um arquivo style.css) */
+        /* Variáveis de Cores */
         :root {
-            --cor-principal: #FF69B4; /* Rosa Choque, pode ser alterado para #E9967A (Salmão) ou #8B0000 (Vermelho Escuro) */
-            --cor-fundo: #FFF8E1; /* Creme Suave */
-            --cor-texto: #444;
+            --cor-texto-principal: #FFC0CB; /* Rosa claro, como na imagem */
+            --cor-texto-secundario: #f0f0f0;
+            --cor-fundo-overlay: rgba(0, 0, 0, 0.5); /* Escurece a imagem de fundo */
         }
 
+        /* Estilos Gerais */
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: var(--cor-fundo);
-            color: var(--cor-texto);
-            text-align: center;
-            line-height: 1.6;
+            background-color: #000; /* Fundo preto para as transições */
+            color: var(--cor-texto-secundario);
+            overflow-x: hidden; /* Evita rolagem horizontal */
+            scroll-behavior: smooth; /* Rolagem suave entre as seções */
         }
 
-        .hero {
-            background-image: url('sua_foto_principal.jpg'); /* Substitua por sua melhor foto! */
-            background-size: cover;
-            background-position: center;
-            height: 100vh; /* Ocupa a altura total da tela */
+        /* Estilo para cada seção (tela cheia) */
+        .section {
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Efeito Parallax */
         }
 
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4em;
-            margin-bottom: 0.1em;
-        }
-
-        .hero p {
-            font-size: 1.5em;
-            letter-spacing: 2px;
-            border-bottom: 3px solid white;
-            padding-bottom: 10px;
-        }
-
-        .section {
-            padding: 60px 20px;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .section h2 {
-            font-family: 'Playfair Display', serif;
-            color: var(--cor-principal);
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--cor-principal);
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        /* Estilo da Contagem Progressiva */
-        #contador {
-            font-size: 2em;
-            font-weight: bold;
-            color: var(--cor-principal);
-            margin-top: 20px;
-        }
-
-        /* Estilo da Galeria/Linha do Tempo */
-        .timeline {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .timeline-item {
-            width: 300px;
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: left;
-        }
-
-        .timeline-item img {
+        .section::before { /* Overlay para escurecer a imagem */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: auto;
-            border-radius: 6px;
-            margin-bottom: 10px;
+            height: 100%;
+            background-color: var(--cor-fundo-overlay);
+            z-index: 1;
         }
 
-        .timeline-item h3 {
-            color: var(--cor-principal);
-            font-family: 'Playfair Display', serif;
-            margin-top: 0;
+        .section-content {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            max-width: 800px;
+        }
+
+        /* Títulos principais (como o nome da Gabriela Lopez) */
+        .section h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 5em;
+            color: var(--cor-texto-principal);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .section h2 { /* Títulos das seções internas */
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5em;
+            color: var(--cor-texto-principal);
+            margin-bottom: 20px;
+        }
+
+        .section p {
+            font-size: 1.2em;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo dos corações */
+        .hearts {
+            font-size: 2em;
+            color: var(--cor-texto-principal);
+            margin: 20px 0;
+            letter-spacing: 5px; /* Espaçamento entre os corações */
+        }
+
+        /* Estilo da Navegação (pontos na parte inferior) */
+        .navigation-dots {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dot.active {
+            background-color: var(--cor-texto-principal);
+        }
+
+        /* Estilos específicos para a galeria */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            max-height: 50vh; /* Limita a altura da galeria para não transbordar */
+            overflow-y: auto; /* Adiciona rolagem se muitas fotos */
+            padding: 10px; /* Preenchimento para a barra de rolagem */
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: 150px; /* Altura fixa para as miniaturas */
+            object-fit: cover; /* Recorta a imagem para preencher */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsividade Básica */
+        @media (max-width: 768px) {
+            .section h1 {
+                font-size: 3.5em;
+            }
+            .section h2 {
+                font-size: 2.5em;
+            }
+            .section p {
+                font-size: 1em;
+            }
+            .hearts {
+                font-size: 1.5em;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero">
-        <h1>[Nome Dela], Meu Amor</h1>
-        <p>A História Mais Linda Começou Em [Data do Início]</p>
-        <div id="contador"></div>
-    </header>
+    <div id="section1" class="section" style="background-image: url('sua_foto_de_capa.jpg');">
+        <div class="section-content">
+            <h1>[Nome Dela]</h1>
+            <p>"Meu amor, uma pequena homenagem só para você..."</p>
+            <div class="hearts">❤️ ❤️ ❤️</div>
+            <p style="font-family: 'Great Vibes', cursive; font-size: 2.5em; margin-top: 30px;">com amor,<br>[Seu Nome]</p>
+        </div>
+    </div>
 
-    <section class="section">
-        <h2>A Nossa História</h2>
-        <p>Cada momento ao seu lado é um presente que guardo no coração. Lembre-se de alguns dos nossos favoritos:</p>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <img src="foto_momento_1.jpg" alt="Nosso Primeiro Encontro">
-                <h3>Primeiro Encontro</h3>
-                <p><strong>[DD/MM/AAAA]</strong></p>
-                <p>Lembro-me de cada detalhe daquele dia. Meu coração sabia que algo especial estava começando. Foi perfeito!</p>
-            </div>
+    <div id="section2" class="section" style="background-image: url('foto_fundo_msg.jpg');">
+        <div class="section-content">
+            <h2>Minha Mensagem para Você</h2>
+            <p>
+                Desde que você entrou na minha vida, tudo ficou mais colorido e cheio de sentido.
+                Sua risada é a melodia que mais gosto de ouvir, e seu abraço é o meu lugar favorito no mundo.
+                Cada dia ao seu lado é uma nova descoberta e uma nova razão para amar.
+                Você é a minha inspiração, meu porto seguro e a pessoa que me faz querer ser melhor.
+            </p>
+            <p>
+                Eu te amo mais do que as palavras podem expressar. Sempre e para sempre.
+            </p>
+        </div>
+    </div>
 
-            <div class="timeline-item">
-                <img src="foto_momento_2.jpg" alt="Nossa Primeira Viagem">
-                <h3>Aventura em [Local]</h3>
-                <p><strong>[DD/MM/AAAA]</strong></p>
-                <p>Nossa primeira viagem juntos. Aprendi muito sobre o seu lado aventureiro e me apaixonei mais um pouco.</p>
-            </div>
+    <div id="section3" class="section" style="background-image: url('foto_fundo_galeria.jpg');">
+        <div class="section-content">
+            <h2>Nossas Memórias em Fotos</h2>
+            <p>Alguns dos nossos momentos mais preciosos, eternizados.</p>
+            <div class="gallery-grid">
+                <img src="foto_galeria_1.jpg" alt="Foto 1">
+                <img src="foto_galeria_2.jpg" alt="Foto 2">
+                <img src="foto_galeria_3.jpg" alt="Foto 3">
+                <img src="foto_galeria_4.jpg" alt="Foto 4">
+                <img src="foto_galeria_5.jpg" alt="Foto 5">
+                <img src="foto_galeria_6.jpg" alt="Foto 6">
+                </div>
+        </div>
+    </div>
 
-            <div class="timeline-item">
-                <img src="foto_momento_3.jpg" alt="Nosso Momento Favorito">
-                <h3>Nosso Cantinho Favorito</h3>
-                <p><strong>[DD/MM/AAAA]</strong></p>
-                <p>Esse dia no [Local] foi simples, mas a sua risada fez tudo valer a pena. Meu momento favorito com você.</p>
-            </div>
-            
-            </div>
-    </section>
+    <div id="section4" class="section" style="background-image: url('foto_fundo_amo.jpg');">
+        <div class="section-content">
+            <h2>O Que Eu Mais Amo em Você</h2>
+            <p>É impossível listar tudo, mas aqui estão algumas das muitas coisas que me encantam:</p>
+            <ul style="list-style: none; padding: 0; font-size: 1.1em;">
+                <li>✨ Seu sorriso que ilumina qualquer dia.</li>
+                <li>💖 Sua bondade e o jeito que você cuida das pessoas.</li>
+                <li>😂 Seu senso de humor que sempre me faz rir.</li>
+                <li>🧠 Sua inteligência e as conversas profundas que temos.</li>
+                <li>💪 Sua força e determinação.</li>
+                <li>😌 O conforto e a paz que sinto ao seu lado.</li>
+                </ul>
+        </div>
+    </div>
 
-    <section class="section" style="background-color: white;">
-        <h2>Meu Amor Por Você</h2>
-        <p style="font-style: italic; font-size: 1.2em; color: var(--cor-principal);">
-            "De todas as histórias de amor do mundo, a nossa é a minha favorita. Você é a minha paz e a minha alegria."
-        </p>
-        <p>Obrigado por ser quem você é. <br>Com todo o meu amor, **[Seu Nome]**.</p>
-    </section>
+    <div id="section5" class="section" style="background-image: url('foto_fundo_historia.jpg');">
+        <div class="section-content">
+            <h2>A Nossa História</h2>
+            <p>Desde o nosso primeiro encontro, sabia que havia algo especial.</p>
+            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <p><strong>[DD/MM/AAAA] - O Início de Tudo:</strong> O dia em que nossos olhares se cruzaram e o mundo parou.</p>
+                <p><strong>[DD/MM/AAAA] - Nosso Primeiro Beijo:</strong> Um momento mágico que selou o começo da nossa jornada.</p>
+                <p><strong>[DD/MM/AAAA] - A Primeira Viagem:</strong> Descobrindo novos lugares e fortalecendo ainda mais nossa conexão.</p>
+                <p><strong>[DD/MM/AAAA] - Nosso Aniversário:</strong> Mais um ano de amor, risadas e memórias inesquecíveis.</p>
+                </div>
+        </div>
+    </div>
+
+    <div id="section6" class="section" style="background-image: url('foto_fundo_sonhos.jpg');">
+        <div class="section-content">
+            <h2>Nossos Sonhos Juntos</h2>
+            <p>Com você, o futuro é uma tela em branco que quero pintar.</p>
+            <ul style="list-style: none; padding: 0; font-size: 1.1em;">
+                <li>🏡 Construir um lar cheio de amor e alegria.</li>
+                <li>✈️ Viajar o mundo e criar memórias em cada canto.</li>
+                <li>👨‍👩‍👧‍👦 Formar a nossa família (se for um sonho de vocês).</li>
+                <li>🌳 Envelhecer ao seu lado, com a certeza do nosso amor.</li>
+                <li>😄 Continuar rindo e vivendo cada dia intensamente.</li>
+                </ul>
+            <p style="font-family: 'Great Vibes', cursive; font-size: 2.5em; margin-top: 40px;">Para sempre com você,<br>[Seu Nome]</p>
+        </div>
+    </div>
+
+    <div class="navigation-dots">
+        <div class="dot active" data-section="section1"></div>
+        <div class="dot" data-section="section2"></div>
+        <div class="dot" data-section="section3"></div>
+        <div class="dot" data-section="section4"></div>
+        <div class="dot" data-section="section5"></div>
+        <div class="dot" data-section="section6"></div>
+    </div>
 
     <script>
-        // SCRIPT JAVASCRIPT para Contagem Progressiva (Há quanto tempo vocês estão juntos)
+        const sections = document.querySelectorAll('.section');
+        const dots = document.querySelectorAll('.dot');
+        let currentSectionIndex = 0;
 
-        // *** IMPORTANTE: ALtere a data aqui para a data de início do seu relacionamento: Ano, Mês-1, Dia
-        const dataInicio = new Date(2023, 5, 10); // Exemplo: 10 de Junho de 2023 (Mês 5 = Junho, pois Janeiro é 0)
-        // **********************************************************************************************
-
-        function atualizarContador() {
-            const agora = new Date();
-            const diferenca = agora - dataInicio;
-
-            // Cálculos
-            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-            const meses = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 30.4375)); // Média de dias por mês
-            const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365.25));
-
-            document.getElementById('contador').innerHTML = 
-                `${anos} Anos | ${meses} Meses | ${dias} Dias Juntos ❤️`;
+        // Função para rolar para a seção
+        function scrollToSection(index) {
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+            updateDots(index);
         }
 
-        // Atualiza a cada segundo
-        atualizarContador(); 
-        setInterval(atualizarContador, 1000 * 60 * 60 * 24); // A cada 24 horas (para atualizar os dias)
+        // Função para atualizar os pontos de navegação
+        function updateDots(activeIndex) {
+            dots.forEach((dot, index) => {
+                if (index === activeIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            currentSectionIndex = activeIndex;
+        }
+
+        // Adiciona evento de clique aos pontos
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const sectionId = dot.dataset.section;
+                const targetSection = document.getElementById(sectionId);
+                const index = Array.from(sections).indexOf(targetSection);
+                scrollToSection(index);
+            });
+        });
+
+        // Opcional: Navegação por rolagem da roda do mouse
+        let isScrolling = false;
+        window.addEventListener('wheel', (event) => {
+            if (isScrolling) return;
+
+            isScrolling = true;
+            setTimeout(() => { isScrolling = false; }, 1000); // Debounce para evitar múltiplos scrolls
+
+            if (event.deltaY > 0) { // Rolando para baixo
+                if (currentSectionIndex < sections.length - 1) {
+                    scrollToSection(currentSectionIndex + 1);
+                }
+            } else { // Rolando para cima
+                if (currentSectionIndex > 0) {
+                    scrollToSection(currentSectionIndex - 1);
+                }
+            }
+        });
+
+        // Opcional: Atualizar ponto ativo ao rolar manualmente
+        window.addEventListener('scroll', () => {
+            let newActiveIndex = 0;
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                    newActiveIndex = index;
+                }
+            });
+            updateDots(newActiveIndex);
+        });
+
+        updateDots(0); // Garante que o primeiro ponto esteja ativo ao carregar
     </script>
 
 </body>
