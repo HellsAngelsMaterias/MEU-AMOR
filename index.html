@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para o Meu Amor, [Nome Dela]</title>
+    <title>Um Presente Especial Para Você, [Nome Dela]</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* Variáveis de Cores */
         :root {
-            --cor-texto-principal: #FFC0CB; /* Rosa claro, como na imagem */
-            --cor-texto-secundario: #f0f0f0;
-            --cor-fundo-overlay: rgba(0, 0, 0, 0.5); /* Escurece a imagem de fundo */
+            --cor-principal: #FF69B4; /* Rosa, como na ref */
+            --cor-secundaria: #f0f0f0; /* Branco suave */
+            --cor-bg-escuro: #1a1a1a; /* Fundo escuro dos modais */
+            --cor-bg-overlay: rgba(0, 0, 0, 0.6); /* Overlay do fundo principal */
+            --cor-borda-modal: #333;
         }
 
         /* Estilos Gerais */
@@ -18,302 +21,706 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #000; /* Fundo preto para as transições */
-            color: var(--cor-texto-secundario);
-            overflow-x: hidden; /* Evita rolagem horizontal */
-            scroll-behavior: smooth; /* Rolagem suave entre as seções */
+            background-color: #000;
+            color: var(--cor-secundaria);
+            overflow: hidden; /* Controlado pelo JS */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        /* Estilo para cada seção (tela cheia) */
-        .section {
+        /* Estilo para cada "tela" */
+        .screen {
             width: 100vw;
             height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: white;
-            position: relative;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Efeito Parallax */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
         }
 
-        .section::before { /* Overlay para escurecer a imagem */
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .screen::before { /* Overlay escuro para as imagens de fundo */
             content: "";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--cor-fundo-overlay);
+            background-color: var(--cor-bg-overlay);
             z-index: 1;
         }
 
-        .section-content {
+        .screen-content {
             position: relative;
             z-index: 2;
             padding: 20px;
-            max-width: 800px;
+            max-width: 900px;
         }
 
-        /* Títulos principais (como o nome da Gabriela Lopez) */
-        .section h1 {
+        /* Títulos e textos inspirados na imagem */
+        .screen h1 {
             font-family: 'Great Vibes', cursive;
             font-size: 5em;
-            color: var(--cor-texto-principal);
+            color: var(--cor-principal);
             margin: 0;
-            line-height: 1;
+            line-height: 1.2;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
         }
-
-        .section h2 { /* Títulos das seções internas */
+        .screen h2 {
             font-family: 'Great Vibes', cursive;
-            font-size: 3.5em;
-            color: var(--cor-texto-principal);
+            font-size: 4em;
+            color: var(--cor-principal);
             margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
-
-        .section p {
+        .screen p {
             font-size: 1.2em;
             font-weight: 300;
+            margin-bottom: 15px;
+        }
+
+        /* Corações */
+        .hearts {
+            font-size: 1.8em;
+            color: var(--cor-principal);
+            margin: 15px 0;
+            letter-spacing: 5px;
+        }
+
+        /* Estilo da Carta (Envelope) */
+        .envelope-container {
+            position: relative;
+            width: 400px;
+            height: 250px;
+            background-color: var(--cor-bg-escuro);
+            border: 2px solid var(--cor-principal);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.4); /* Brilho rosa */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .envelope-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(255, 105, 180, 0.6);
+        }
+        .envelope-container .top-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-bottom: 125px solid #2a2a2a; /* Cor do triângulo superior */
+            border-radius: 15px 15px 0 0;
+            transition: transform 0.5s ease-in-out;
+            transform-origin: top;
+            z-index: 3;
+        }
+        .envelope-container.open .top-flap {
+            transform: rotateX(180deg);
+        }
+        .envelope-container .bottom-flap {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-top: 125px solid #2a2a2a;
+            border-radius: 0 0 15px 15px;
+            z-index: 3;
+        }
+        .envelope-container .left-flap {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 125px solid transparent;
+            border-bottom: 125px solid transparent;
+            border-right: 200px solid #2a2a2a;
+            border-radius: 15px 0 0 15px;
+            z-index: 3;
+        }
+        .envelope-container .right-flap {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-top: 125px solid transparent;
+            border-bottom: 125px solid transparent;
+            border-left: 200px solid #2a2a2a;
+            border-radius: 0 15px 15px 0;
+            z-index: 3;
+        }
+
+        .envelope-details {
+            position: relative;
+            z-index: 4; /* Acima das abas */
+            color: var(--cor-secundaria);
+            font-size: 1.1em;
+            padding: 20px;
+            width: 100%;
+        }
+        .envelope-details .to-from {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        .envelope-details .to-from span {
+            font-size: 1.2em;
+            color: var(--cor-principal);
+            font-family: 'Great Vibes', cursive;
+        }
+        .envelope-details p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9em;
+            margin-top: 30px;
+        }
+        .envelope-details .arrow-down {
+            font-size: 1.5em;
+            margin-top: 10px;
+            animation: bounce 1.5s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* Ponto de clique no envelope */
+        .envelope-dot {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--cor-principal);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 5;
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .envelope-dot:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.9);
+        }
+
+        /* Modals (Pop-ups) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: var(--cor-bg-escuro);
+            border: 2px solid var(--cor-borda-modal);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: relative;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--cor-secundaria);
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .modal-close:hover {
+            color: var(--cor-principal);
+        }
+        .modal-content h3 {
+            font-family: 'Great Vibes', cursive; /* Mantém a fonte caligráfica para títulos internos */
+            color: var(--cor-principal);
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .modal-content h3 i {
+            font-size: 0.8em;
+        }
+        .modal-content p {
+            font-size: 1.1em;
+            line-height: 1.7;
+            text-align: justify;
             margin-bottom: 20px;
         }
 
-        /* Estilo dos corações */
-        .hearts {
-            font-size: 2em;
-            color: var(--cor-texto-principal);
-            margin: 20px 0;
-            letter-spacing: 5px; /* Espaçamento entre os corações */
-        }
-
-        /* Estilo da Navegação (pontos na parte inferior) */
-        .navigation-dots {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 100;
+        /* Estilo da Galeria Modal */
+        .modal-gallery-header {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2b2b2b;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: var(--cor-secundaria);
         }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            background-color: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .modal-gallery-header h3 {
+            margin: 0;
+            font-size: 1.8em; /* Ajuste para o header */
+            color: var(--cor-secundaria);
+            font-family: 'Montserrat', sans-serif; /* Fonte normal para o header da galeria */
         }
-
-        .dot.active {
-            background-color: var(--cor-texto-principal);
+        .modal-gallery-header h3 i {
+             color: var(--cor-principal);
         }
-
-        /* Estilos específicos para a galeria */
-        .gallery-grid {
+        .modal-gallery-header span {
+            background-color: var(--cor-principal);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .modal-gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-            max-height: 50vh; /* Limita a altura da galeria para não transbordar */
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            max-height: 50vh; /* Limita a altura da galeria */
             overflow-y: auto; /* Adiciona rolagem se muitas fotos */
-            padding: 10px; /* Preenchimento para a barra de rolagem */
+            padding-right: 5px; /* Espaço para a barra de rolagem */
         }
-
-        .gallery-grid img {
+        .modal-gallery-grid img {
             width: 100%;
-            height: 150px; /* Altura fixa para as miniaturas */
-            object-fit: cover; /* Recorta a imagem para preencher */
+            height: 100px;
+            object-fit: cover;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-
-        .gallery-grid img:hover {
+        .modal-gallery-grid img:hover {
             transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        .view-all-photos-btn {
+            background-color: var(--cor-principal);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .view-all-photos-btn:hover {
+            background-color: #ff85c1;
+            transform: translateY(-2px);
         }
 
-        /* Responsividade Básica */
+        /* Estilo para a tela final de agradecimento */
+        .thank-you-message h2 {
+            font-size: 3em;
+        }
+        .thank-you-message p {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5em;
+            color: var(--cor-principal);
+            margin-top: 30px;
+        }
+
+        /* Ocultar barra de rolagem (opcional) */
+        .modal-gallery-grid::-webkit-scrollbar {
+            width: 8px;
+        }
+        .modal-gallery-grid::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 105, 180, 0.5); /* Rosa semitransparente */
+            border-radius: 10px;
+        }
+        .modal-gallery-grid::-webkit-scrollbar-track {
+            background-color: #333;
+            border-radius: 10px;
+        }
+
+        /* Responsividade */
         @media (max-width: 768px) {
-            .section h1 {
+            .screen h1 {
                 font-size: 3.5em;
             }
-            .section h2 {
+            .screen h2 {
                 font-size: 2.5em;
             }
-            .section p {
+            .screen p {
                 font-size: 1em;
             }
-            .hearts {
-                font-size: 1.5em;
+            .envelope-container {
+                width: 90%;
+                height: 200px;
             }
-            .gallery-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            .envelope-container .top-flap, .envelope-container .bottom-flap {
+                border-left-width: 45vw; /* Ajusta para 90% da largura */
+                border-right-width: 45vw;
+                border-bottom-width: 100px;
+                border-top-width: 100px;
+            }
+            .envelope-container .left-flap, .envelope-container .right-flap {
+                border-top-width: 100px;
+                border-bottom-width: 100px;
+                border-right-width: 45vw;
+                border-left-width: 45vw;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+            .modal-content h3 {
+                font-size: 2em;
+            }
+            .modal-content p {
+                font-size: 0.95em;
+            }
+            .modal-gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
             }
         }
     </style>
 </head>
 <body>
 
-    <div id="section1" class="section" style="background-image: url('sua_foto_de_capa.jpg');">
-        <div class="section-content">
-            <h1>[Nome Dela]</h1>
-            <p>"Meu amor, uma pequena homenagem só para você..."</p>
-            <div class="hearts">❤️ ❤️ ❤️</div>
-            <p style="font-family: 'Great Vibes', cursive; font-size: 2.5em; margin-top: 30px;">com amor,<br>[Seu Nome]</p>
+    <div id="loadingScreen" class="screen active" style="background-image: url('fundo_intro.jpg');">
+        <div class="screen-content">
+            <h1>Coletando suas melhores memórias...</h1>
+            <div class="hearts">💖</div>
+            <p>Cada foto conta uma história especial</p>
+            <div class="gallery-grid" style="max-height: none; overflow: visible; margin-top: 50px;">
+                <img src="foto_intro_1.jpg" alt="Memória 1" style="width: 180px; height: 180px; transform: rotate(-8deg); margin: -30px 10px;">
+                <img src="foto_intro_2.jpg" alt="Memória 2" style="width: 200px; height: 200px; transform: rotate(5deg);">
+                <img src="foto_intro_3.jpg" alt="Memória 3" style="width: 190px; height: 190px; transform: rotate(-3deg); margin: 20px -10px;">
+            </div>
         </div>
     </div>
 
-    <div id="section2" class="section" style="background-image: url('foto_fundo_msg.jpg');">
-        <div class="section-content">
-            <h2>Minha Mensagem para Você</h2>
-            <p>
-                Desde que você entrou na minha vida, tudo ficou mais colorido e cheio de sentido.
-                Sua risada é a melodia que mais gosto de ouvir, e seu abraço é o meu lugar favorito no mundo.
-                Cada dia ao seu lado é uma nova descoberta e uma nova razão para amar.
-                Você é a minha inspiração, meu porto seguro e a pessoa que me faz querer ser melhor.
-            </p>
-            <p>
-                Eu te amo mais do que as palavras podem expressar. Sempre e para sempre.
-            </p>
-        </div>
-    </div>
-
-    <div id="section3" class="section" style="background-image: url('foto_fundo_galeria.jpg');">
-        <div class="section-content">
-            <h2>Nossas Memórias em Fotos</h2>
-            <p>Alguns dos nossos momentos mais preciosos, eternizados.</p>
-            <div class="gallery-grid">
-                <img src="foto_galeria_1.jpg" alt="Foto 1">
-                <img src="foto_galeria_2.jpg" alt="Foto 2">
-                <img src="foto_galeria_3.jpg" alt="Foto 3">
-                <img src="foto_galeria_4.jpg" alt="Foto 4">
-                <img src="foto_galeria_5.jpg" alt="Foto 5">
-                <img src="foto_galeria_6.jpg" alt="Foto 6">
+    <div id="envelopeScreen" class="screen" style="background-image: url('fundo_envelope.jpg');">
+        <div class="screen-content">
+            <div class="envelope-container" id="envelope">
+                <div class="top-flap"></div>
+                <div class="bottom-flap"></div>
+                <div class="left-flap"></div>
+                <div class="right-flap"></div>
+                <div class="envelope-dot" id="openEnvelopeBtn"><i class="fas fa-heart"></i></div>
+                <div class="envelope-details">
+                    <div class="to-from">
+                        <span>Para: <span style="font-family: 'Great Vibes', cursive;">[Nome Dela]</span></span>
+                        <span>De: <span style="font-family: 'Great Vibes', cursive;">[Seu Nome]</span></span>
+                    </div>
+                    <p class="arrow-down">Toque para abrir</p>
                 </div>
+            </div>
         </div>
     </div>
 
-    <div id="section4" class="section" style="background-image: url('foto_fundo_amo.jpg');">
-        <div class="section-content">
-            <h2>O Que Eu Mais Amo em Você</h2>
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeMessageModal"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-envelope-open-text"></i> Mensagem</h3>
+            <p>
+                Amor, às vezes eu fico aqui pensando no tamanho da sorte que eu tenho... Todo dia eu acordo feliz só
+                por saber que você existe na minha vida. Você é meu amor, minha paz, meu sorriso fácil. A melhor
+                sensação do mundo é imaginar a gente juntinhos, eu te abraçando forte, te enchendo de beijinhos e
+                vivendo cada coisinha boa ao seu lado. Eu sempre vou escolher você. Sempre.
+            </p>
+            <p style="font-size: 0.9em; margin-top: 30px;">
+                <i class="fas fa-ellipsis-h"></i> Deslize para o lado para continuar
+            </p>
+        </div>
+    </div>
+
+    <div id="galleryModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeGalleryModal"><i class="fas fa-times"></i></button>
+            <div class="modal-gallery-header">
+                <h3><i class="fas fa-camera"></i> Nossas Fotos</h3>
+                <span id="galleryPhotoCount">4 fotos</span>
+            </div>
+            <div class="modal-gallery-grid" id="fullGalleryGrid">
+                </div>
+            <button class="view-all-photos-btn" id="loadMorePhotosBtn" style="display: none;">
+                <i class="fas fa-images"></i> Ver Mais Fotos
+            </button>
+        </div>
+    </div>
+
+    <div id="loveModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeLoveModal"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-heartbeat"></i> O Que Eu Mais Amo em Você</h3>
             <p>É impossível listar tudo, mas aqui estão algumas das muitas coisas que me encantam:</p>
-            <ul style="list-style: none; padding: 0; font-size: 1.1em;">
+            <ul style="list-style: none; padding: 0; font-size: 1.1em; text-align: left; max-width: 400px; margin: 20px auto;">
                 <li>✨ Seu sorriso que ilumina qualquer dia.</li>
                 <li>💖 Sua bondade e o jeito que você cuida das pessoas.</li>
                 <li>😂 Seu senso de humor que sempre me faz rir.</li>
                 <li>🧠 Sua inteligência e as conversas profundas que temos.</li>
                 <li>💪 Sua força e determinação.</li>
                 <li>😌 O conforto e a paz que sinto ao seu lado.</li>
-                </ul>
+            </ul>
         </div>
     </div>
 
-    <div id="section5" class="section" style="background-image: url('foto_fundo_historia.jpg');">
-        <div class="section-content">
-            <h2>A Nossa História</h2>
-            <p>Desde o nosso primeiro encontro, sabia que havia algo especial.</p>
-            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+    <div id="historyModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeHistoryModal"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-book-open"></i> A Nossa História</h3>
+            <p>Desde o nosso primeiro encontro, sabia que havia algo especial. Cada data, um novo capítulo:</p>
+            <div style="text-align: left; max-width: 600px; margin: 0 auto; font-size: 1.1em;">
                 <p><strong>[DD/MM/AAAA] - O Início de Tudo:</strong> O dia em que nossos olhares se cruzaram e o mundo parou.</p>
                 <p><strong>[DD/MM/AAAA] - Nosso Primeiro Beijo:</strong> Um momento mágico que selou o começo da nossa jornada.</p>
                 <p><strong>[DD/MM/AAAA] - A Primeira Viagem:</strong> Descobrindo novos lugares e fortalecendo ainda mais nossa conexão.</p>
                 <p><strong>[DD/MM/AAAA] - Nosso Aniversário:</strong> Mais um ano de amor, risadas e memórias inesquecíveis.</p>
-                </div>
+                <p><strong>[DD/MM/AAAA] - Um Momento Inesquecível:</strong> [Descreva um outro momento marcante de vocês]</p>
+            </div>
         </div>
     </div>
 
-    <div id="section6" class="section" style="background-image: url('foto_fundo_sonhos.jpg');">
-        <div class="section-content">
-            <h2>Nossos Sonhos Juntos</h2>
-            <p>Com você, o futuro é uma tela em branco que quero pintar.</p>
-            <ul style="list-style: none; padding: 0; font-size: 1.1em;">
+    <div id="dreamsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeDreamsModal"><i class="fas fa-times"></i></button>
+            <h3><i class="fas fa-star"></i> Nossos Sonhos Juntos</h3>
+            <p>Com você, o futuro é uma tela em branco que quero pintar com todas as cores do amor:</p>
+            <ul style="list-style: none; padding: 0; font-size: 1.1em; text-align: left; max-width: 400px; margin: 20px auto;">
                 <li>🏡 Construir um lar cheio de amor e alegria.</li>
                 <li>✈️ Viajar o mundo e criar memórias em cada canto.</li>
-                <li>👨‍👩‍👧‍👦 Formar a nossa família (se for um sonho de vocês).</li>
+                <li>👨‍👩‍👧‍👦 Formar a nossa família e vê-la crescer.</li>
                 <li>🌳 Envelhecer ao seu lado, com a certeza do nosso amor.</li>
                 <li>😄 Continuar rindo e vivendo cada dia intensamente.</li>
-                </ul>
-            <p style="font-family: 'Great Vibes', cursive; font-size: 2.5em; margin-top: 40px;">Para sempre com você,<br>[Seu Nome]</p>
+                <li>🌟 Realizar [Mencione um sonho específico de vocês]</li>
+            </ul>
+            <p style="font-family: 'Great Vibes', cursive; font-size: 2em; color: var(--cor-principal); margin-top: 40px;">Para sempre com você,<br>[Seu Nome]</p>
         </div>
     </div>
 
-    <div class="navigation-dots">
-        <div class="dot active" data-section="section1"></div>
-        <div class="dot" data-section="section2"></div>
-        <div class="dot" data-section="section3"></div>
-        <div class="dot" data-section="section4"></div>
-        <div class="dot" data-section="section5"></div>
-        <div class="dot" data-section="section6"></div>
+    <div class="navigation-dots" style="bottom: 20px; z-index: 1000;">
+        <div class="dot active" data-modal="messageModal" title="Mensagem"></div>
+        <div class="dot" data-modal="galleryModal" title="Fotos"></div>
+        <div class="dot" data-modal="loveModal" title="O que amo em você"></div>
+        <div class="dot" data-modal="historyModal" title="Nossa História"></div>
+        <div class="dot" data-modal="dreamsModal" title="Nossos Sonhos"></div>
     </div>
 
-    <script>
-        const sections = document.querySelectorAll('.section');
-        const dots = document.querySelectorAll('.dot');
-        let currentSectionIndex = 0;
 
-        // Função para rolar para a seção
-        function scrollToSection(index) {
-            sections[index].scrollIntoView({ behavior: 'smooth' });
-            updateDots(index);
+    <script>
+        const loadingScreen = document.getElementById('loadingScreen');
+        const envelopeScreen = document.getElementById('envelopeScreen');
+        const envelope = document.getElementById('envelope');
+        const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
+
+        const messageModal = document.getElementById('messageModal');
+        const closeMessageModal = document.getElementById('closeMessageModal');
+
+        const galleryModal = document.getElementById('galleryModal');
+        const closeGalleryModal = document.getElementById('closeGalleryModal');
+        const fullGalleryGrid = document.getElementById('fullGalleryGrid');
+        const galleryPhotoCount = document.getElementById('galleryPhotoCount');
+        const loadMorePhotosBtn = document.getElementById('loadMorePhotosBtn');
+
+        const loveModal = document.getElementById('loveModal');
+        const closeLoveModal = document.getElementById('closeLoveModal');
+
+        const historyModal = document.getElementById('historyModal');
+        const closeHistoryModal = document.getElementById('closeHistoryModal');
+
+        const dreamsModal = document.getElementById('dreamsModal');
+        const closeDreamsModal = document.getElementById('closeDreamsModal');
+
+        const dots = document.querySelectorAll('.navigation-dots .dot');
+
+        // SUAS FOTOS AQUI (coloque os nomes dos arquivos na mesma pasta do HTML)
+        // Certifique-se de que os arquivos de imagem existam!
+        const allPhotos = [
+            'foto_galeria_1.jpg',
+            'foto_galeria_2.jpg',
+            'foto_galeria_3.jpg',
+            'foto_galeria_4.jpg',
+            'foto_galeria_5.jpg',
+            'foto_galeria_6.jpg',
+            'foto_galeria_7.jpg',
+            'foto_galeria_8.jpg',
+            'foto_galeria_9.jpg',
+            'foto_galeria_10.jpg',
+            // Adicione mais fotos aqui!
+        ];
+        let photosToShowInitially = 4; // Quantidade de fotos para mostrar no header da galeria
+
+        // --- FUNÇÕES DE CONTROLE DE TELA/MODAL ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+            document.body.style.overflow = 'hidden'; // Impede rolagem no corpo principal
         }
 
-        // Função para atualizar os pontos de navegação
-        function updateDots(activeIndex) {
-            dots.forEach((dot, index) => {
-                if (index === activeIndex) {
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden'; // Impede rolagem quando modal está aberto
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            // Só habilita a rolagem se não houver outros modais abertos
+            if (!document.querySelector('.modal-overlay.active')) {
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function updateDotActiveState(activeModalId) {
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.dataset.modal === activeModalId) {
                     dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
                 }
             });
-            currentSectionIndex = activeIndex;
         }
 
-        // Adiciona evento de clique aos pontos
+        // --- CARREGAMENTO INICIAL ---
+        window.addEventListener('load', () => {
+            // Após 3 segundos na tela de carregamento, mostra a tela do envelope
+            setTimeout(() => {
+                loadingScreen.classList.remove('active');
+                showScreen('envelopeScreen');
+            }, 3000); // 3 segundos
+        });
+
+        // --- EVENTOS DA CARTA (ENVELOPE) ---
+        openEnvelopeBtn.addEventListener('click', () => {
+            envelope.classList.add('open');
+            envelope.style.pointerEvents = 'none'; // Desabilita clique no envelope depois de abrir
+
+            // Animação para o overlay do envelope sumir ou revelar o próximo conteúdo
+            setTimeout(() => {
+                showScreen('envelopeScreen'); // Garante que a tela de fundo ainda esteja visível
+                openModal('messageModal'); // Abre o modal de mensagem
+                updateDotActiveState('messageModal');
+            }, 800); // Tempo para a animação da carta
+        });
+
+        // --- EVENTOS DOS MODAIS ---
+        closeMessageModal.addEventListener('click', () => {
+            closeModal('messageModal');
+            // Após fechar a mensagem, abre automaticamente a galeria
+            openModal('galleryModal');
+            updateDotActiveState('galleryModal');
+            loadGalleryPhotos(photosToShowInitially); // Carrega fotos iniciais na galeria
+        });
+
+        closeGalleryModal.addEventListener('click', () => closeModal('galleryModal'));
+        closeLoveModal.addEventListener('click', () => closeModal('loveModal'));
+        closeHistoryModal.addEventListener('click', () => closeModal('historyModal'));
+        closeDreamsModal.addEventListener('click', () => closeModal('dreamsModal'));
+
+        // --- NAVEGAÇÃO POR PONTOS ---
         dots.forEach(dot => {
             dot.addEventListener('click', () => {
-                const sectionId = dot.dataset.section;
-                const targetSection = document.getElementById(sectionId);
-                const index = Array.from(sections).indexOf(targetSection);
-                scrollToSection(index);
+                const targetModalId = dot.dataset.modal;
+                // Fecha qualquer modal aberto
+                document.querySelectorAll('.modal-overlay').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                // Abre o modal clicado
+                openModal(targetModalId);
+                updateDotActiveState(targetModalId);
+
+                // Lógica específica para a galeria se for clicada
+                if (targetModalId === 'galleryModal') {
+                    loadGalleryPhotos(photosToShowInitially);
+                }
             });
         });
 
-        // Opcional: Navegação por rolagem da roda do mouse
-        let isScrolling = false;
-        window.addEventListener('wheel', (event) => {
-            if (isScrolling) return;
+        // --- LÓGICA DA GALERIA ---
+        function loadGalleryPhotos(count) {
+            fullGalleryGrid.innerHTML = ''; // Limpa as fotos existentes
+            const photosSubset = allPhotos.slice(0, count);
 
-            isScrolling = true;
-            setTimeout(() => { isScrolling = false; }, 1000); // Debounce para evitar múltiplos scrolls
+            photosSubset.forEach(photoSrc => {
+                const img = document.createElement('img');
+                img.src = photoSrc;
+                img.alt = 'Nossa Foto';
+                fullGalleryGrid.appendChild(img);
+            });
 
-            if (event.deltaY > 0) { // Rolando para baixo
-                if (currentSectionIndex < sections.length - 1) {
-                    scrollToSection(currentSectionIndex + 1);
-                }
-            } else { // Rolando para cima
-                if (currentSectionIndex > 0) {
-                    scrollToSection(currentSectionIndex - 1);
-                }
+            galleryPhotoCount.textContent = `${photosSubset.length} fotos`;
+
+            // Mostra o botão "Ver Mais Fotos" se houver mais fotos para carregar
+            if (count < allPhotos.length) {
+                loadMorePhotosBtn.style.display = 'inline-flex';
+            } else {
+                loadMorePhotosBtn.style.display = 'none';
             }
+        }
+
+        loadMorePhotosBtn.addEventListener('click', () => {
+            photosToShowInitially = allPhotos.length; // Carrega todas as fotos
+            loadGalleryPhotos(photosToShowInitially);
         });
 
-        // Opcional: Atualizar ponto ativo ao rolar manualmente
-        window.addEventListener('scroll', () => {
-            let newActiveIndex = 0;
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-                    newActiveIndex = index;
-                }
-            });
-            updateDots(newActiveIndex);
-        });
-
-        updateDots(0); // Garante que o primeiro ponto esteja ativo ao carregar
+        // Definir o estado inicial dos pontos
+        updateDotActiveState('messageModal'); // Mensagem é o primeiro a ser aberto após a carta
     </script>
 
 </body>
