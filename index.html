@@ -74,7 +74,6 @@
         }
 
         /* Tipografia */
-        /* Estilo para o Título da Intro - Alterado */
         .custom-intro-title {
             display: flex;
             flex-direction: column;
@@ -108,8 +107,7 @@
             font-weight: 700;
             padding: 0 10px;
         }
-        /* Fim da Alteração do Título */
-
+        
         .signature {
             font-family: 'Great Vibes', cursive;
             font-size: 2.5em;
@@ -145,7 +143,33 @@
             transform: translateY(-2px);
         }
 
-        /* --- ESTILO DO ENVELOPE (Limpo) --- */
+        /* --- ESTILO: QR CODE --- */
+        .qrcode-container {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: rgba(26, 26, 26, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .qrcode-container p {
+            font-size: 0.9em;
+            font-weight: 300;
+            color: var(--cor-secundaria);
+            margin-bottom: 10px;
+        }
+        .qrcode-container img {
+            width: 150px; /* Tamanho do QR Code */
+            height: 150px;
+            border: 5px solid white;
+            border-radius: 5px;
+            background-color: white; /* Garante que o fundo seja branco para leitura */
+        }
+        /* --- FIM NOVO ESTILO --- */
+
+        /* --- ESTILO DO ENVELOPE --- (MANTIDO) */
         .envelope-container {
             position: relative;
             width: 400px;
@@ -250,7 +274,7 @@
             100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
         }
 
-        /* Estilos dos Modais Padrão (Mensagem, Amor, História, Sonhos) */
+        /* Estilos dos Modais Padrão (MANTIDO) */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -345,7 +369,7 @@
             margin-top: 30px;
         }
 
-        /* --- ESTILO: VISUALIZADOR DE FOTOS (SLIDESHOW) --- */
+        /* --- ESTILO: VISUALIZADOR DE FOTOS (SLIDESHOW) --- (MANTIDO) */
         #photoViewerModal {
             background-color: rgba(0, 0, 0, 0.95); 
             z-index: 2000; 
@@ -437,27 +461,35 @@
             color: black;
         }
         
-        /* --- NOVO ESTILO: Corações no Rastro do Mouse --- */
+        /* --- CÓDIGO: RASTRO DE CORAÇÕES --- (MANTIDO) */
         .heart-trail {
             position: fixed;
-            font-size: 1.5em; /* Tamanho do coração */
-            color: var(--cor-principal); /* Cor principal (Rosa) */
-            pointer-events: none; /* Garante que os corações não atrapalhem o clique */
+            font-size: 1.5em; 
+            color: var(--cor-principal); 
+            pointer-events: none; 
             transform: translate(-50%, -50%);
             animation: fadeOut 1s forwards;
-            z-index: 5000; /* Deve aparecer acima de tudo */
+            z-index: 5000; 
             text-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
         }
 
         @keyframes fadeOut {
             0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) translateY(-20px); } /* Desaparece subindo */
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.5) translateY(-20px); } 
         }
 
         /* Responsividade para celulares */
         @media (max-width: 768px) {
             .custom-intro-title h1 {
                 font-size: 2.5em;
+            }
+            .qrcode-container {
+                margin-top: 30px;
+                padding: 10px;
+            }
+            .qrcode-container img {
+                width: 120px;
+                height: 120px;
             }
             .envelope-container {
                 width: 90%;
@@ -506,13 +538,20 @@
                 </div>
                 <h1>Sua homenagem está pronta!</h1>
             </div>
+
             <p class="text-small">Para</p>
             <p class="signature">Gabriela Lopes</p>
             <p class="text-small">Com muito carinho, <span class="signature" style="font-size: 1.8em; margin: 0;">Jone Lucas</span></p>
+            
             <button class="open-gift-btn" id="goToEnvelopeBtn">
                 <i class="fas fa-arrow-right"></i> Abrir Presente
             </button>
-        </div>
+            
+            <div class="qrcode-container">
+                <p>Acesse nosso site aqui!</p>
+                <img src="meu_qrcode.png" alt="QR Code do Site">
+            </div>
+            </div>
     </div>
 
     <div id="envelopeScreen" class="screen" style="background-image: url('fundo_envelope.jpg');">
