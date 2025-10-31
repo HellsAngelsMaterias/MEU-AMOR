@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Um Presente Especial Para Você, [Nome Dela]</title>
+    <title>Um Presente Especial Para Você, Gabriela Lopes</title>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -448,10 +448,10 @@
             <h1>Coletando suas melhores memórias...</h1>
             <div class="hearts">💖</div>
             <p>Cada foto conta uma história especial</p>
-            <div class="gallery-grid" style="max-height: none; overflow: visible; margin-top: 50px;">
-                <img src="foto_intro_1.jpg" alt="Memória 1" style="width: 180px; height: 180px; transform: rotate(-8deg); margin: -30px 10px;">
-                <img src="foto_intro_2.jpg" alt="Memória 2" style="width: 200px; height: 200px; transform: rotate(5deg);">
-                <img src="foto_intro_3.jpg" alt="Memória 3" style="width: 190px; height: 190px; transform: rotate(-3deg); margin: 20px -10px;">
+            <div class="gallery-grid" style="max-height: none; overflow: visible; margin-top: 50px; display: flex; justify-content: center; align-items: flex-end;">
+                <img src="foto_intro_1.jpg" alt="Memória 1" style="width: 180px; height: 180px; object-fit: cover; border-radius: 8px; transform: rotate(-8deg); margin: -30px 10px;">
+                <img src="foto_intro_2.jpg" alt="Memória 2" style="width: 200px; height: 200px; object-fit: cover; border-radius: 8px; transform: rotate(5deg);">
+                <img src="foto_intro_3.jpg" alt="Memória 3" style="width: 190px; height: 190px; object-fit: cover; border-radius: 8px; transform: rotate(-3deg); margin: 20px -10px;">
             </div>
         </div>
     </div>
@@ -466,8 +466,8 @@
                 <div class="envelope-dot" id="openEnvelopeBtn"><i class="fas fa-heart"></i></div>
                 <div class="envelope-details">
                     <div class="to-from">
-                        <span>Para: <span style="font-family: 'Great Vibes', cursive;">[Nome Dela]</span></span>
-                        <span>De: <span style="font-family: 'Great Vibes', cursive;">[Seu Nome]</span></span>
+                        <span>Para: <span style="font-family: 'Great Vibes', cursive;">Gabriela Lopes</span></span>
+                        <span>De: <span style="font-family: 'Great Vibes', cursive;">Jone Lucas</span></span>
                     </div>
                     <p class="arrow-down">Toque para abrir</p>
                 </div>
@@ -480,13 +480,20 @@
             <button class="modal-close" id="closeMessageModal"><i class="fas fa-times"></i></button>
             <h3><i class="fas fa-envelope-open-text"></i> Mensagem</h3>
             <p>
-                Amor, às vezes eu fico aqui pensando no tamanho da sorte que eu tenho... Todo dia eu acordo feliz só
-                por saber que você existe na minha vida. Você é meu amor, minha paz, meu sorriso fácil. A melhor
-                sensação do mundo é imaginar a gente juntinhos, eu te abraçando forte, te enchendo de beijinhos e
-                vivendo cada coisinha boa ao seu lado. Eu sempre vou escolher você. Sempre.
+                Amor, às vezes eu fico aqui pensando no tamanho da sorte que eu tenho… Todo dia eu acordo feliz só por saber que você existe na minha vida. Você é meu amor, minha paz, meu sorriso fácil. A melhor sensação do mundo é imaginar a gente juntinhos, eu te abraçando forte, te enchendo de beijinhos e vivendo cada coisinha boa ao seu lado.
+                Eu sempre vou escolher você. Sempre. Cada segundo com você é especial, é único, é diferente de tudo que eu já vivi. Eu que agradeço, meu amor, por nunca soltar a minha mão, por estar comigo em todos os momentos. Você é tudo pra mim, tudo mesmo.
             </p>
-            <p style="font-size: 0.9em; margin-top: 30px;">
-                <i class="fas fa-ellipsis-h"></i> Deslize para o lado para continuar
+            <p>
+                Eu sou completamente apaixonado por cada detalhe seu. Fico revendo seus vídeos e áudios, com aquele sorrisinho bobo, pensando: “caramba, que mulher maravilhosa eu tenho!”. Você mexe comigo de um jeito que ninguém nunca conseguiu. Até quando a gente briga, amor… eu sei que é só o mundo tentando testar a gente, porque nosso futuro vai ser gigante.
+            </p>
+            <p>
+                E falando em teste… eu morro de medo quando você tá bravinha kkkk mas amo o seu jeitinho, sou totalmente viciado em você. Eu nunca me arrependi de nada que fiz pela gente e nem vou. Aprender com você, cuidar de você, amar você… é um privilégio enorme.
+            </p>
+            <p>
+                Deus sabia o que tava fazendo quando cruzou nossos caminhos. Você é o amor da minha vida, minha baixinha, minha princesa, minha nenezinha. E pode ter certeza: a gente vai casar sim, e eu não vejo a hora de te chamar de minha pra sempre.
+            </p>
+            <p style="font-size: 0.9em; margin-top: 30px; text-align: center;">
+                <i class="fas fa-ellipsis-h"></i> Clique no (X) para ver as outras seções
             </p>
         </div>
     </div>
@@ -496,7 +503,7 @@
             <button class="modal-close" id="closeGalleryModal"><i class="fas fa-times"></i></button>
             <div class="modal-gallery-header">
                 <h3><i class="fas fa-camera"></i> Nossas Fotos</h3>
-                <span id="galleryPhotoCount">4 fotos</span>
+                <span id="galleryPhotoCount"></span>
             </div>
             <div class="modal-gallery-grid" id="fullGalleryGrid">
                 </div>
@@ -510,15 +517,15 @@
         <div class="modal-content">
             <button class="modal-close" id="closeLoveModal"><i class="fas fa-times"></i></button>
             <h3><i class="fas fa-heartbeat"></i> O Que Eu Mais Amo em Você</h3>
-            <p>É impossível listar tudo, mas aqui estão algumas das muitas coisas que me encantam:</p>
-            <ul style="list-style: none; padding: 0; font-size: 1.1em; text-align: left; max-width: 400px; margin: 20px auto;">
-                <li>✨ Seu sorriso que ilumina qualquer dia.</li>
-                <li>💖 Sua bondade e o jeito que você cuida das pessoas.</li>
-                <li>😂 Seu senso de humor que sempre me faz rir.</li>
-                <li>🧠 Sua inteligência e as conversas profundas que temos.</li>
-                <li>💪 Sua força e determinação.</li>
-                <li>😌 O conforto e a paz que sinto ao seu lado.</li>
-            </ul>
+            <p>
+                Amor, eu amo o jeito que você me trata, o jeito que olha pra mim com aquele olhar que me desmonta por dentro. Você é tão inteligente, focada, simples, romântica… uma combinação perfeita. Eu admiro cada detalhe seu, cada gesto, cada palavra.
+            </p>
+            <p>
+                Você é incrível, maravilhosa, gentil, linda e perfeita em todos os sentidos. Tudo em você me encanta, me acalma e me faz querer ser alguém melhor. Eu amo o seu jeitinho, o seu carinho, o seu cuidado… amo o modo como você transforma até os dias mais comuns em momentos especiais só por estar neles.
+            </p>
+            <p>
+                Você é o meu refúgio, meu amor, minha paz. E toda vez que eu te olho, tenho certeza de que encontrei a pessoa certa, aquela que eu quero pra sempre.
+            </p>
         </div>
     </div>
 
@@ -526,14 +533,24 @@
         <div class="modal-content">
             <button class="modal-close" id="closeHistoryModal"><i class="fas fa-times"></i></button>
             <h3><i class="fas fa-book-open"></i> A Nossa História</h3>
-            <p>Desde o nosso primeiro encontro, sabia que havia algo especial. Cada data, um novo capítulo:</p>
-            <div style="text-align: left; max-width: 600px; margin: 0 auto; font-size: 1.1em;">
-                <p><strong>[DD/MM/AAAA] - O Início de Tudo:</strong> O dia em que nossos olhares se cruzaram e o mundo parou.</p>
-                <p><strong>[DD/MM/AAAA] - Nosso Primeiro Beijo:</strong> Um momento mágico que selou o começo da nossa jornada.</p>
-                <p><strong>[DD/MM/AAAA] - A Primeira Viagem:</strong> Descobrindo novos lugares e fortalecendo ainda mais nossa conexão.</p>
-                <p><strong>[DD/MM/AAAA] - Nosso Aniversário:</strong> Mais um ano de amor, risadas e memórias inesquecíveis.</p>
-                <p><strong>[DD/MM/AAAA] - Um Momento Inesquecível:</strong> [Descreva um outro momento marcante de vocês]</p>
-            </div>
+            <p>
+                Nossa história é algo que eu nunca vou esquecer. Tudo começou quando a Anajuh queria montar uma fac e me chamou pra participar. No começo eu nem queria, não tava muito no clima, e acabei deixando quieto. Nesse tempo ela conheceu outras pessoas, e entre elas tava você. Naquela época você namorava e eu também, então a gente virou “amigos”. Só que, desde o início, tinha algo diferente, mesmo que a gente fingisse que não. Eu entrei pra fac da minha irmã e, mesmo assim, a gente sempre se falava. Às vezes era só pra pedir algo ou conversar um pouco, mas com o tempo, cada papo ficava mais leve, mais bom de ter.
+            </p>
+            <p>
+                Aí veio aquele dia em que você me chamou pra fazer uma ammu. Eu quase nunca aceitava, mas dessa vez aceitei, e foi aí que tudo começou a mudar. Nossa amizade ficou mais forte, e a gente começou a fazer várias coisas juntos. Aos poucos, o sentimento foi crescendo, até que chegou o momento em que a gente não conseguiu mais esconder e decidiu falar o que sentia.
+            </p>
+            <p>
+                Só que a fac tinha uma regra: não podia ter relacionamento. Mesmo assim, o sentimento falou mais alto, e a gente ficou junto escondido, só nosso, e cada momento era incrível. Teve aquele pedido do nada (que eu sei que você não gostou muito kkkk), mas depois eu quis fazer tudo certo. Te levei na cachoeira da cidade, me ajoelhei, te dei ursos, uma aliança, e aquele dia foi perfeito. Foi ali que nosso namoro começou de verdade, e quando contamos pra todo mundo, foi mágico.
+            </p>
+            <p>
+                Depois veio uma briga boba, coisa de criança, e eu acabei terminando. Foram uns 20 dias sem se falar, e parecia uma eternidade. Mesmo assim, eu ainda te amava e sabia que você também. Criei coragem, te mandei mensagem e pedi pra gente voltar a conversar. Você me deu uma chance, mesmo com todo mundo dizendo pra não confiar em mim. E eu não desperdicei. Aos poucos, reconquistei você.
+            </p>
+            <p>
+                Voltamos a rir, conversar e, com o tempo, voltamos a namorar escondido de novo, mas era perfeito. A gente se conheceu de verdade, aprendeu com os erros e se amou do nosso jeitinho. Hoje estamos juntos, inseparáveis, com nossos amigos e com um amor que só cresce.
+            </p>
+            <p>
+                Nosso começo pode ter sido inesperado, mas foi o destino mostrando que o que é pra ser, sempre encontra o caminho. E eu sei, com toda certeza, que o meu caminho é você.
+            </p>
         </div>
     </div>
 
@@ -541,16 +558,14 @@
         <div class="modal-content">
             <button class="modal-close" id="closeDreamsModal"><i class="fas fa-times"></i></button>
             <h3><i class="fas fa-star"></i> Nossos Sonhos Juntos</h3>
-            <p>Com você, o futuro é uma tela em branco que quero pintar com todas as cores do amor:</p>
             <ul style="list-style: none; padding: 0; font-size: 1.1em; text-align: left; max-width: 400px; margin: 20px auto;">
-                <li>🏡 Construir um lar cheio de amor e alegria.</li>
-                <li>✈️ Viajar o mundo e criar memórias em cada canto.</li>
-                <li>👨‍👩‍👧‍👦 Formar a nossa família e vê-la crescer.</li>
-                <li>🌳 Envelhecer ao seu lado, com a certeza do nosso amor.</li>
-                <li>😄 Continuar rindo e vivendo cada dia intensamente.</li>
-                <li>🌟 Realizar [Mencione um sonho específico de vocês]</li>
+                <li>🏡 Nos conhecer pessoalmente, dar um abraço bem apertado e um beijo cheio de amor.</li>
+                <li>💖 Dizer tudo o que sentimos um pelo outro, olhando nos olhos.</li>
+                <li>👨‍👩‍👧‍👦 Construir uma família juntos e ter filhos.</li>
+                <li>💍 Nos casar e ficar juntos para sempre.</li>
+                <li>✈️ Viajar e viver muitas aventuras ao seu lado.</li>
             </ul>
-            <p style="font-family: 'Great Vibes', cursive; font-size: 2em; color: var(--cor-principal); margin-top: 40px;">Para sempre com você,<br>[Seu Nome]</p>
+            <p style="font-family: 'Great Vibes', cursive; font-size: 2em; color: var(--cor-principal); margin-top: 40px;">Para sempre com você,<br>Jone Lucas</p>
         </div>
     </div>
 
@@ -601,8 +616,7 @@
             'foto_galeria_7.jpg',
             'foto_galeria_8.jpg',
             'foto_galeria_9.jpg',
-            'foto_galeria_10.jpg',
-            // Adicione mais fotos aqui!
+            // Adicione mais fotos aqui se tiver!
         ];
         let photosToShowInitially = 4; // Quantidade de fotos para mostrar no header da galeria
 
